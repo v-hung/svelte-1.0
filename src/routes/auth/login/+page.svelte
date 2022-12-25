@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { signIn } from "@auth/sveltekit/client"
 	import logo from '$lib/images/svelte-logo.svg';
 
   let show = false
@@ -10,9 +11,29 @@
       input_pass.type = show ? 'text' : 'password'
     }
   }
+
+  let email    : string = ""
+  let password : string = ""
+  let error    : string = ""
+
+  const login = async () => {
+    error = ""
+    signIn('credentials', {
+      redirect: false,
+      email: email,
+      password: password,
+      callbackUrl: `${window.location.origin}/dashboard`,
+    })
+    .then(async (a) => {
+      let data = await a?.json()
+      let url = (data?.url || "").split('?')[1]
+      let url_params = new URLSearchParams(url);
+      error = url_params.get('error') || ""
+    })
+  }
 </script>
 
-<div class="w-full min-h-screen bg-gray-100 py-20">
+<div class="w-full min-h-screen bg-gray-100 py-16">
 	<div class="w-full max-w-lg mx-auto rounded-lg shadow px-12 py-8 bg-white">
 		<div class="flex flex-col justify-center items-center">
 			<img src={logo} alt="logo" class="w-20" />
@@ -30,13 +51,14 @@
 						type="text"
 						class="flex-grow min-w-0 px-4 py-2"
 						placeholder="e.g. viet@doe.com"
+            bind:value={email}
 					/>
 				</div>
 			</div>
 			<div class="mb-4">
 				<label for="password" class="label required">Password</label>
 				<div class="input-login mt-1">
-					<input bind:this={input_pass} id="password" type="password" class="flex-grow min-w-0 px-4 py-2" />
+					<input bind:this={input_pass} id="password" type="password" bind:value={password} class="flex-grow min-w-0 px-4 py-2" />
 					<div class="flex-none px-2">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <span 
@@ -52,6 +74,43 @@
           </div>
 				</div>
 			</div>
+
+      {#if error != ""}
+        <p class="mb-4 text-red-500 text-sm">* Email or password is corrected</p>
+      {/if}
+
+      <div class="mb-4 pt-2">
+        <button class="btn" on:click|preventDefault={login}>Login</button>
+      </div>
+
+      <hr>
+
+      <div class="mb-4 pt-4">
+        <button 
+          class="btn-2 bg-blue-700 hover:bg-blue-600 text-white"
+          on:click|preventDefault={() => signIn("google", {callbackUrl: `${window.location.origin}/dashboard`})}
+        >
+          <span class="btn-icon"><img src="/images/google.png" alt=""></span>
+          <span class="btn-text">Login with Google</span>
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <button class="btn-2 bg-sky-700 hover:bg-sky-600 text-white">
+          <span class="btn-icon"><img src="/images/facebook.png" alt=""></span>
+          <span class="btn-text">Login with Facebook</span>
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <button 
+          class="btn-2 bg-stone-800 hover:bg-stone-700 text-white"
+          on:click|preventDefault={() => signIn("github", {callbackUrl: `${window.location.origin}/dashboard`})}
+        >
+          <span class="btn-icon"><img src="/images/github.png" alt=""></span>
+          <span class="btn-text">Login with Github</span>
+        </button>
+      </div>
 		</form>
 	</div>
 </div>
@@ -74,4 +133,19 @@
 	.input-login:focus-within {
 		@apply ring-2;
 	}
+
+  .btn {
+    @apply block w-full text-center px-4 py-2 rounded bg-orange-500 text-white hover:bg-orange-400;
+  }
+  .btn-2 {
+    @apply w-full flex items-center px-4 py-2 rounded;
+  }
+
+  .btn-2 .btn-icon {
+    @apply w-8 h-8 rounded bg-white p-1;
+  }
+
+  .btn-2 .btn-text {
+    @apply flex-grow min-w-0 text-center font-semibold px-2;
+  }
 </style>
