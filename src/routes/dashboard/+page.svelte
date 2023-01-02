@@ -1,11 +1,21 @@
 <script lang="ts">
-  import { signOut } from "@auth/sveltekit/client"
+	import { applyAction, enhance } from "$app/forms";
+	import { goto } from "$app/navigation";
   import { page } from "$app/stores"
+	import { redirect } from "@sveltejs/kit";
 
-  console.log($page.data.session?.user)
+  console.log($page.data?.user)
 </script>
 
-<p>{$page.data.session?.user?.name}</p>
-<p>{$page.data.session?.user?.email}</p>
-<p>Session expiry: {$page.data.session?.expires}</p>
-<button on:click={() => signOut()}>Logout</button>
+<p>{$page.data.user?.name}</p>
+<img src="{$page.data.user?.image}" alt="">
+<form action="/auth/login?/logout" method="post"
+  use:enhance={({ form, data, action, cancel }) => {
+    return async ({ result, update }) => {
+      await applyAction(result)
+      goto('/')
+    };
+  }}
+>
+  <button type="submit">Logout</button>
+</form>
