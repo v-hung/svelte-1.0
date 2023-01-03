@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from "$app/forms";
-	import { goto } from "$app/navigation";
+	import { goto, invalidate, invalidateAll } from "$app/navigation";
   import { page } from "$app/stores"
 	import { redirect } from "@sveltejs/kit";
 
@@ -13,7 +13,7 @@
   use:enhance={({ form, data, action, cancel }) => {
     return async ({ result, update }) => {
       await applyAction(result)
-      goto('/')
+      await invalidateAll()
     };
   }}
 >

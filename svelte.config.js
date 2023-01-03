@@ -37,28 +37,28 @@ const config = {
     // },
 
 	},
-  plugins: [
-    {
-      name: 'sveltekit-socket-io',
-      configureServer(server) {
-        const io = new Server(server.httpServer);
+  // plugins: [
+  //   {
+  //     name: 'sveltekit-socket-io',
+  //     configureServer(server) {
+  //       const io = new Server(server.httpServer);
 
-        // Socket.IO stuff goes here                
+  //       // Socket.IO stuff goes here                
 
-        console.log('SocketIO injected');
-      }
-    },
-    {
-      name: 'log-request-middleware',
-      configureServer(server) {
-        server.middlewares.use((req, res, next) => {
-          console.log(`Got request ${req.url}`);
-          next();
-        });
-      }
-    },
-    myPlugin()
-  ]
+  //       console.log('SocketIO injected');
+  //     }
+  //   },
+  //   {
+  //     name: 'log-request-middleware',
+  //     configureServer(server) {
+  //       server.middlewares.use((req, res, next) => {
+  //         console.log(`Got request ${req.url}`);
+  //         next();
+  //       });
+  //     }
+  //   },
+  //   myPlugin()
+  // ]
 };
 
 export default config;

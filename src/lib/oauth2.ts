@@ -26,3 +26,7 @@ export const signIn = async (provider: OauthProvider, options?: OauthOption) => 
     window.location.replace(data.redirect_uri)
   })
 }
+
+export const signOut = async () => {
+
+}
