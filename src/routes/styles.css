@@ -2,11 +2,107 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    background-color: rgb(246, 246, 249);
+    @apply text-[#555];
+  }
+
+  h1,h2,h3,h4,h5 {
+    @apply text-[#333];
+  }
+
+  input, select, textarea {
+    background: transparent;
+  }
+  input:focus, textarea:focus, a:focus {
+    outline: none;
+	}                                                                                  
+
+  table {
+    @apply w-full;
+  }
+
+  table td,
+  table th {
+    @apply py-5 px-4 font-normal;
+  }
+
+  table > thead > tr {
+    @apply uppercase text-sm text-left border-b border-gray-300 text-[#333];
+  }
+
+  table > tbody > tr > td:first-child,
+  table > tbody > tr > td:last-child {
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  table tr > td:first-child {
+    @apply pl-0
+  }
+  table tr > td:last-child {
+    @apply pl-12;
+  }
+
+  table > tbody > tr {
+    @apply bg-white border-b border-gray-200;
+  }
+
+  table > tbody > tr > td > *{
+    @apply line-clamp-1;
+  }
+
+  input[type=checkbox] {
+    vertical-align: sub;
+    margin: 0px;
+    height: 18px;
+    min-width: 18px;
+    border-radius: 4px;
+    border: 1px solid rgb(192, 192, 207);
+    appearance: none;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+  }
+  input[type=checkbox]:checked {
+    @apply bg-orange-600 border-orange-600;
+  }
+  input[type=checkbox]:checked::after{
+    content: "";
+    display: block;
+    position: relative;
+    background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEwIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHBhdGgKICAgIGQ9Ik04LjU1MzIzIDAuMzk2OTczQzguNjMxMzUgMC4zMTYzNTUgOC43NjA1MSAwLjMxNTgxMSA4LjgzOTMxIDAuMzk1NzY4TDkuODYyNTYgMS40MzQwN0M5LjkzODkzIDEuNTExNTcgOS45MzkzNSAxLjYzNTkgOS44NjM0OSAxLjcxMzlMNC4wNjQwMSA3LjY3NzI0QzMuOTg1OSA3Ljc1NzU1IDMuODU3MDcgNy43NTgwNSAzLjc3ODM0IDcuNjc4MzRMMC4xMzg2NiAzLjk5MzMzQzAuMDYxNzc5OCAzLjkxNTQ5IDAuMDYxNzEwMiAzLjc5MDMyIDAuMTM4NTA0IDMuNzEyNEwxLjE2MjEzIDIuNjczNzJDMS4yNDAzOCAyLjU5NDMyIDEuMzY4NDMgMi41OTQyMiAxLjQ0NjggMi42NzM0OEwzLjkyMTc0IDUuMTc2NDdMOC41NTMyMyAwLjM5Njk3M1oiCiAgICBmaWxsPSJ3aGl0ZSIKICAvPgo8L3N2Zz4=") center center no-repeat;
+    width: 10px;
+    height: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+
 @layer components {
   .icon {
     @apply block w-6 h-6;
   }
   .icon svg {
     @apply !fill-current !w-full !h-full;
+  }
+
+  .btn {
+    @apply block px-4 py-1.5 rounded border border-gray-300 bg-white hover:bg-gray-200;
+  }
+
+  .btn-icon {
+    @apply flex space-x-2 items-center pl-2 pr-4 py-1.5 rounded border border-gray-300 bg-white hover:bg-gray-200;
+  }
+
+  .btn-orange {
+    @apply bg-orange-600 text-white hover:bg-orange-500 border-orange-600;
+  }
+}
+
+@layer utilities {
+  .text-primary {
+    @apply text-[#333];
   }
 }

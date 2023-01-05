@@ -1,6 +1,7 @@
 <header>
   <a href="/" class="">Home</a>
-  <a href="/about">about</a>
+  <a href="/about">About</a>
+  <a href="/dashboard">Dashboard</a>
 </header>
 
 <slot/>

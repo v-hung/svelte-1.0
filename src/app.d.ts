@@ -26,4 +26,5 @@ declare namespace App {
     user: User | null;
   }
 	// interface Platform {}
+  
 }

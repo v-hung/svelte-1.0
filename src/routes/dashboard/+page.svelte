@@ -4,18 +4,21 @@
   import { page } from "$app/stores"
 	import { redirect } from "@sveltejs/kit";
 
-  console.log($page.data?.user)
+  // console.log($page.data?.user)
 </script>
 
-<p>{$page.data.user?.name}</p>
-<img src="{$page.data.user?.image}" alt="">
-<form action="/auth/login?/logout" method="post"
-  use:enhance={({ form, data, action, cancel }) => {
-    return async ({ result, update }) => {
-      await applyAction(result)
-      await invalidateAll()
-    };
-  }}
->
-  <button type="submit">Logout</button>
-</form>
+<div class="flex -mx-2">
+  <div class="w-1/3 px-2 mb-4">
+    <div class="w-full h-60 bg-white rounded p-4 shadow"></div>
+  </div>
+  <div class="w-1/3 px-2 mb-4">
+    <div class="w-full h-60 bg-white rounded p-4 shadow"></div>
+  </div>
+  <div class="w-1/3 px-2 mb-4">
+    <div class="w-full h-60 bg-white rounded p-4 shadow"></div>
+  </div>
+</div>
+
+<div class="w-full h-96 bg-white rounded p-4 shadow mb-4"></div>
+
+<div class="w-full h-96 bg-white rounded p-4 shadow mb-4"></div>
