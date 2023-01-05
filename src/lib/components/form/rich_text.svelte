@@ -1,28 +1,19 @@
-<script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
-  import * as FroalaEditor from 'froala-editor';
-
-  import "froala-editor/css/froala_editor.pkgd.min.css"
-
+<script >
+  import Editor from '@tinymce/tinymce-svelte';
   export let label = ''
-  export let data = ''
+  // export let data = ''
 
-  let uuid_component = crypto.randomUUID()
-  let component = null
-  let editor
+  let config_tinymce = {
+    "height": 500,
+    "plugins": [
+      "a11ychecker","advlist","advcode","advtable","autolink","checklist","export",
+      "lists","link","image","charmap","preview","anchor","searchreplace","visualblocks",
+      "powerpaste","fullscreen","formatpainter","insertdatetime","media","table","help","wordcount"
+    ],
 
-	onMount(async () => {
-		// use module here...
-    if (component)
-      editor = new FroalaEditor(component, {
-        attribution: false
-      });
-	});
-
-  onDestroy(() => {
-    if (editor)
-      editor.destroy()
-  })
+    "toolbar": "undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | " +
+    "bullist numlist checklist outdent indent | removeformat | code table help"
+  }
 </script>
 
 <div>
@@ -33,5 +24,5 @@
     </span>
   </p>
 
-  <div bind:this={component} id="example"></div>
+  <Editor conf={config_tinymce} />
 </div>
