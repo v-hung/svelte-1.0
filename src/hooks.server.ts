@@ -51,7 +51,7 @@ const refreshToken = async (refresh_token) => {
 export const handle: Handle = async ({ event, resolve }) => {
   const token = event.request.headers.get('authorization')?.split(' ')[1] 
     || event.cookies.get('token')
-    || event.url.searchParams.get('token')
+    // || event.url.searchParams.get('token') // not use in hook
     || "token"
 
   const decoded = await verifyToken(token)
@@ -65,7 +65,7 @@ export const handle: Handle = async ({ event, resolve }) => {
   else {
     // const body = await event.request.json()
     const refresh_token = event.cookies.get('refresh_token')
-      || event.url.searchParams.get('refresh_token')
+      // || event.url.searchParams.get('refresh_token') // not use in hook
       || "refresh_token"
 
     const data_refresh_token = await refreshToken(refresh_token)

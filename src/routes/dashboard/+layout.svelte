@@ -6,6 +6,8 @@
   import { slide } from 'svelte/transition'
   import { clickOutside } from "$lib/utils/clickOutSide";
 
+  export let data
+
   $: pathname = ($page.url.pathname + "/").split('/')[2]
 
   let collapse = false
@@ -126,7 +128,7 @@
 
   <div class="flex-grow min-w-0 relative py-4 px-12">
     <div class="flex justify-between items-center border-b pb-4" style="height: 53px;">
-      <h3 class="text-3xl font-bold">{good_time}, {$page.data.user?.name}!</h3>
+      <h3 class="text-3xl font-bold">{good_time}, {data.user?.name}!</h3>
 
       <div class="flex space-x-4 items-center">
         <!-- notification -->
@@ -143,7 +145,7 @@
           <div class="flex space-x-1 items-center" on:click|preventDefault={() => toggle_user = !toggle_user}>
             <div class="w-10 h-10 border rounded-full overflow-hidden cursor-pointer">
               <!-- svelte-ignore a11y-img-redundant-alt -->
-              <img src={$page.data.user?.image} alt="Photo by user" class="w-full h-full object-cover" loading="lazy" />
+              <img src={data.user?.image} alt="Photo by {data.user?.name}" class="w-full h-full object-cover" loading="lazy" />
             </div>
             <span class="icon transition-all cursor-pointer {toggle_user ? 'rotate-180' : ''}">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
