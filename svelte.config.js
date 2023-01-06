@@ -21,6 +21,9 @@ const config = {
 
 	kit: {
 		adapter: adapter(),
+    csrf: {
+      checkOrigin: false,
+    }
     // vite: {
     //   plugins: [
     //     {

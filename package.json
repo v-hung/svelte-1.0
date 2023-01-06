@@ -36,6 +36,7 @@
 		"@tinymce/tinymce-svelte": "^1.0.0",
 		"bcrypt": "^5.1.0",
 		"froala-editor": "^4.0.16",
+		"fs": "^0.0.1-security",
 		"jsonwebtoken": "^9.0.0",
 		"slugify": "^1.6.5",
 		"socket.io": "^4.5.4",

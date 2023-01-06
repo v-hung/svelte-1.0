@@ -83,6 +83,10 @@ export const handle: Handle = async ({ event, resolve }) => {
       event.locals.session = null
     }
   }
+
+  if (event.url.pathname.split('/')[1] == "dashboard" && event.locals.session == null) {
+    return new Response('Redirect', {status: 303, headers: { Location: '/auth/login' }});
+  }
   
   const response = await resolve(event)
 

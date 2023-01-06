@@ -23,7 +23,7 @@ declare namespace App {
     session: Session | null;
   }
 	interface PageData {
-    user: User | null;
+    user?: User | null;
   }
 	// interface Platform {}
   

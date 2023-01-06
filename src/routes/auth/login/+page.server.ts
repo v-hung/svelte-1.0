@@ -100,6 +100,6 @@ export const actions: Actions = {
     event.cookies.delete('refresh_token', { path: '/' })
     event.locals.session = null
 
-    return { success: true }
+    // return { success: true }
   }
 };
