@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    @apply border-[#dcdce4];
+  }
   body {
     background-color: rgb(246, 246, 249);
     @apply text-[#555];

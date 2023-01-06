@@ -55,3 +55,54 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+// model Product {
+//   id            String    @id @default(cuid())
+// }
+
+model Quizzes {
+  id String @id @default(cuid())
+  title String
+  work_time DateTime
+
+  passages Passages[]
+}
+
+model Passages {
+  id String @id @default(cuid())
+  title String
+
+  quiz_id String
+  quiz Quizzes @relation(fields: [quiz_id], references: [id])
+
+  group_questions GroupQuestions[]
+}
+
+model GroupQuestions {
+  id String @id @default(cuid())
+  title String
+  image String?
+  type String?
+
+  passage_id String
+  passage Passages @relation(fields: [passage_id], references: [id])
+
+  questions Questions[]
+}
+
+model Questions {
+  id String @id @default(cuid())
+
+  group_question_id String
+  group_quesstion GroupQuestions @relation(fields: [group_question_id], references: [id])
+}
+
+model Answers {
+  id String @id @default(cuid())
+}
+
+model QuestionOptions{
+  id String @id @default(cuid())
+}
+
+// https://tuhocielts.dolenglish.vn/luyen-thi-ielts/ielts-online-test-luyen-tap-cambridge-ielts-16-test-4-reading

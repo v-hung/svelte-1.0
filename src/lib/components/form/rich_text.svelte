@@ -1,10 +1,13 @@
 <script >
   import Editor from '@tinymce/tinymce-svelte';
   export let label = ''
+  export let height = 500
   // export let data = ''
 
+  let apiKey_tinymce = "533bnxknzoiro9lr6pa0oawuiww55hjjdqx4hlfledrf210z"
+
   let config_tinymce = {
-    "height": 500,
+    "height": height,
     "plugins": [
       "a11ychecker","advlist","advcode","advtable","autolink","checklist","export",
       "lists","link","image","charmap","preview","anchor","searchreplace","visualblocks",
@@ -24,5 +27,5 @@
     </span>
   </p>
 
-  <Editor conf={config_tinymce} />
+  <Editor apiKey={apiKey_tinymce} conf={config_tinymce} />
 </div>
