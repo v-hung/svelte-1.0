@@ -1,23 +1,45 @@
 <script >
-  import Editor from '@tinymce/tinymce-svelte';
+  // import tinymce from 'tinymce';
+  import Editor from "@tinymce/tinymce-svelte";
+	import { onMount } from 'svelte';
+  // import tiny from "$lib/utils/tinymce.min.js";
   export let label = ''
   export let height = 500
   // export let data = ''
 
-  let apiKey_tinymce = "533bnxknzoiro9lr6pa0oawuiww55hjjdqx4hlfledrf210z"
+  let apiKey_tinymce = "no-api-key"
 
   let config_tinymce = {
     "height": height,
     "plugins": [
-      "a11ychecker","advlist","advcode","advtable","autolink","checklist","export",
+      "advlist","autolink",
       "lists","link","image","charmap","preview","anchor","searchreplace","visualblocks",
-      "powerpaste","fullscreen","formatpainter","insertdatetime","media","table","help","wordcount"
+      "fullscreen","insertdatetime","media","table","help","wordcount"
     ],
 
     "toolbar": "undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | " +
     "bullist numlist checklist outdent indent | removeformat | code table help"
   }
+
+  onMount(() => {
+    // tinymce.init({
+    //   selector: '#mytextarea',
+    //   plugins: [
+    //     // 'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+    //     // 'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+    //     // 'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
+    //   ],
+
+    //   toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+    //     'alignleft aligncenter alignright alignjustify | ' +
+    //     'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+    // });
+  })
 </script>
+
+<svelte:head>
+  <!-- <script src="/js/tinymce/tinymce.min.js"></script> -->
+</svelte:head>
 
 <div>
   <p class="text-xs font-semibold text-primary mb-1.5 capitalize">
@@ -27,7 +49,9 @@
     </span>
   </p>
 
-  <Editor apiKey={apiKey_tinymce} conf={config_tinymce} />
+  <Editor scriptSrc="/js/tinymce/tinymce.min.js" apiKey={apiKey_tinymce} conf={config_tinymce} />
+
+  <!-- <textarea name="mytextarea" id="mytextarea" cols="30" rows="10"></textarea> -->
 </div>
 
 <style>

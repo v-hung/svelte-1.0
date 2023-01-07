@@ -3,13 +3,12 @@
   export let label = ''
   export let data = [{}]
 
-  $: data_render = data.map(v => v = {...v, collapsed: true})
-
   const addToData = () => {
-    data_render = [...data_render, {
-      collapsed: true
+    data = [...data, {
     }]
   }
+
+  let show_item = null
 </script>
 
 <div>
@@ -17,14 +16,14 @@
     {label} <span class="text-red-600">*</span>
   </p>
   <div class="list-rounded flex flex-col">
-    {#each data_render as item}
-      <div class="border bg-white {!item.collapsed ? 'show' : ''}">
+    {#each data as item, index}
+      <div class="border bg-white {show_item == index ? 'show' : ''}">
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div 
           class="item-title flex items-center space-x-2 px-4 py-2 cursor-pointer select-none"
-          on:click|preventDefault={() => item.collapsed = !item.collapsed}
+          on:click|preventDefault={() => show_item = (show_item == index ? null : index)}
         >
-          <span class="icon w-6 h-6 p-1.5 rounded-full bg-gray-200 cursor-pointer transition-transform {!item.collapsed ? 'rotate-180' : ''}">
+          <span class="icon w-6 h-6 p-1.5 rounded-full bg-gray-200 cursor-pointer transition-transform {show_item == index ? 'rotate-180' : ''}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M11.178 19.569a.998.998 0 0 0 1.644 0l9-13A.999.999 0 0 0 21 5H3a1.002 1.002 0 0 0-.822 1.569l9 13z"></path></svg>
           </span>
           <span class="font-semibold">Title</span>
@@ -36,9 +35,9 @@
           </span>
         </div>
 
-        <Collapse show={!item.collapsed}>
+        <Collapse show={show_item == index}>
           <div class="bg-orange-100 px-4 py-6">
-            asd
+            <slot />
           </div>
         </Collapse>
       </div>
