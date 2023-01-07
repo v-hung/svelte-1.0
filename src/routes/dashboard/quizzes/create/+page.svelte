@@ -56,7 +56,7 @@
           </div>
 
           <div class="mb-4">
-            <Passage label="passage" />
+            <Passage label="passages" />
           </div>
         </form>
       </div>

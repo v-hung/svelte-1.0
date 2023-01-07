@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { slide } from "svelte/transition";
 	import Collapse from "../collapse.svelte";
 	import GroupQuestion from "./group_question.svelte";
 	import RichText from "./rich_text.svelte";
@@ -45,7 +44,7 @@
             <div class="mb-4">
               <RichText label="message" height="{300}" />
             </div>
-            <GroupQuestion label="group_question" />
+            <GroupQuestion label="group_questions" />
           </div>
         </Collapse>
         <!-- {/if} -->
@@ -62,11 +61,9 @@
       <span class="font-semibold">Add new entry</span>
     </button>
   </div>
-
-  <div class="hide-animation"></div>
 </div>
 
-<style>
+<style lang="postcss">
   .list-rounded > * {
     @apply border-b-0;
   }

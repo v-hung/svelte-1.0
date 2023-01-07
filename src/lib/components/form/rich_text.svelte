@@ -29,3 +29,10 @@
 
   <Editor apiKey={apiKey_tinymce} conf={config_tinymce} />
 </div>
+
+<style>
+  :global(.tox-tinymce) {
+    border-width: 1px !important;
+    border-color: inherit !important;
+  }
+</style>

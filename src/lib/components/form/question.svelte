@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { slide } from "svelte/transition";
 	import Collapse from "../collapse.svelte";
   export let label = ''
   export let data = [{}]
@@ -57,7 +56,7 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   .list-rounded > * {
     @apply border-b-0;
   }

@@ -152,7 +152,7 @@
             </span>
           </div>
           {#if toggle_user}
-            <div transition:slide={{ duration: 300 }} class="absolute top-full right-0">
+            <div transition:slide={{ duration: 300 }} class="absolute top-full right-0 z-10">
               <div class="w-40 flex flex-col space-y-2 mt-1 p-3 bg-white shadow text-sm rounded">
                 <a href="/dashboard/user" class="link bg-orange-100 text-orange-700 hover:!bg-orange-200">
                   <span class="icon">
