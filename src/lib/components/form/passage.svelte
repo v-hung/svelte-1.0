@@ -43,7 +43,7 @@
             <div class="mb-4">
               <RichText label="message" height="{300}" />
             </div>
-            <GroupQuestion label="group_questions" />
+            <GroupQuestion label="group_questions" passage_index={index} />
           </div>
         </Collapse>
         <!-- {/if} -->

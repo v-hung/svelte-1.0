@@ -9,11 +9,13 @@
 	import YesNo from "./questions/yes_no.svelte";
 
   export let label = ''
+  export let passage_index
   export let data: {
     type: string,
     label: string
   }[] = [
-    {type: 'diagram',label: 'Diagram Label Completion'},
+    {type: 'true-false',label: 'True / False / Not given'},
+    {type: 'yes-no',label: 'Yes / No / Not Given'},
   ]
 
   let show_item = null
@@ -67,7 +69,7 @@
             {#if item.type == "diagram"}
               <Diagram />
             {:else if item.type == "true-false"}
-              <TrueFalse />
+              <TrueFalse {passage_index} group_index={index}/>
             {:else if item.type == "short"}
               <Short />
             {:else if item.type == "single"}
@@ -75,7 +77,7 @@
             {:else if item.type == "summary"}
               <Summary />
             {:else if item.type == "yes-no"}
-              <YesNo />
+              <YesNo {passage_index} group_index={index}/>
             {:else if item.type == "matching"}
               <Matching />
             {/if}

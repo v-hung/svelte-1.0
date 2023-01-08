@@ -28,7 +28,7 @@
           answer <span class="text-red-600">*</span>
         </p>
         <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">
-          <input type="text" name="answer" class="w-full px-4 py-2" placeholder="Canal">
+          <input type="text" name="answer" class="w-full px-4 py-2" placeholder="canal">
         </div>
       </div>
     </Question>
