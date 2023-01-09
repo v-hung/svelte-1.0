@@ -1,12 +1,16 @@
 <script lang="ts">
 	import Collapse from "../collapse.svelte";
-  export let label = ''
-  export let data = [{}]
+  export let label = 'Questions'
+  export let data: any[] = []
   export let is_add = true
 
   const addToData = () => {
     data = [...data, {
+      title: '',
+      answer: null
     }]
+
+    show_item = data.length - 1
   }
 
   let show_item = null
@@ -38,7 +42,7 @@
 
         <Collapse show={show_item == index}>
           <div class="bg-orange-100 px-4 py-6">
-            <slot index={index} />
+            <slot {index} />
           </div>
         </Collapse>
       </div>

@@ -5,6 +5,7 @@
 
   export let label = 'image'
   export let data = ''
+  export let name = ""
 
   let show_modal = false
   let view : "assets" | "upload" | "storage" = "storage"
@@ -122,7 +123,7 @@
     </span>
   </p>
   <div class="h-36 border rounded focus-within:ring-2 ring-orange-600 bg-white">
-    <input type="hidden" name="{label}" bind:value={data} class="sr-only">
+    <input type="hidden" name={name} bind:value={data} class="sr-only">
     <div 
       class="w-full h-full flex flex-col justify-center items-center cursor-pointer"
       on:click|preventDefault={toggleModal}
@@ -142,9 +143,10 @@
 </div>
 
 {#if show_modal}
-  <div class="fixed w-full h-full top-0 left-0 flex items-center justify-center bg-black/10 z-50">
+  <div class="fixed w-full h-full top-0 left-0 flex flex-col bg-black/10 z-50 overflow-auto">
+    <div class="flex-grow"></div>
     <div
-      class="w-full max-w-3xl mx-auto bg-white rounded border shadow-md" 
+      class="flex-none min-h-0 w-full max-w-3xl mx-auto bg-white rounded border shadow-md" 
       use:clickOutside 
       on:click_outside={() => toggleModal(false)}
     >
@@ -300,6 +302,7 @@
         {/if}
       </div>
     </div>
+    <div class="flex-grow"></div>
   </div>
 {/if}
 

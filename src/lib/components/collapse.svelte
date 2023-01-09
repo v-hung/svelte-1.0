@@ -1,6 +1,7 @@
 <script lang="ts">
   export let show = false
 
+  let first_show = show
   let el: HTMLElement | null = null
 
   let time = null
@@ -28,6 +29,6 @@
   $: collapse(show)
 </script>
 
-<div bind:this={el} style="height: 0px; overflow: hidden; transition: height .3s ease;">
+<div bind:this={el} style="{!first_show ? 'height: 0px;' : ''} overflow: hidden; transition: height .3s ease;">
   <slot />
 </div>

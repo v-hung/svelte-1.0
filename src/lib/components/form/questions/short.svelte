@@ -1,10 +1,11 @@
 <script lang="ts">
 	import Image from "../image.svelte";
- import Question from "../question.svelte";
+  import Question from "../question.svelte";
 
+  export let data
 </script>
 
-<Question label="questions">
+<Question bind:data={data} let:index>
   <div>
     <p class="text-xs font-semibold text-primary mb-1.5 capitalize">
       question name <span class="text-red-600">*</span>
@@ -13,7 +14,7 @@
       </span>
     </p>
     <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">
-      <input type="text" name="name" class="w-full px-4 py-2" placeholder="What type of mineral were the Dolaucothi mines in Wales built to extract?">
+      <input type="text" bind:value={data[index]['question_name']} class="w-full px-4 py-2" placeholder="What type of mineral were the Dolaucothi mines in Wales built to extract?">
     </div>
   </div>
 
@@ -22,7 +23,7 @@
       answer <span class="text-red-600">*</span>
     </p>
     <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">
-      <input type="text" name="answer" class="w-full px-4 py-2" placeholder="gold">
+      <input type="text" bind:value={data[index]['answer']} class="w-full px-4 py-2" placeholder="gold">
     </div>
   </div>
 </Question>

@@ -1,7 +1,8 @@
 <script lang="ts">
-  export let label = ''
+  export let label = 'Text'
+  export let name = ""
   export let data = ''
-  export let placeholder=""
+  export let placeholder = ""
 </script>
 
 <div>
@@ -12,6 +13,6 @@
     </span> -->
   </p>
   <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">
-    <input type="text" name="{label}" bind:value={data} class="w-full px-4 py-2" placeholder={placeholder}>
+    <input type="text" name="{name}" bind:value={data} class="w-full px-4 py-2" placeholder={placeholder}>
   </div>
 </div>

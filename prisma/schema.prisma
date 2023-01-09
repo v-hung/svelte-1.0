@@ -11,18 +11,18 @@ datasource db {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String? 
-  access_token       String? 
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? 
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -61,31 +61,35 @@ model VerificationToken {
 // }
 
 model Quizzes {
-  id String @id @default(cuid())
-  title String
+  id        String   @id @default(cuid())
+  title     String
+  slug      String
   work_time DateTime
 
   passages Passages[]
 }
 
 model Passages {
-  id String @id @default(cuid())
-  title String
+  id      String @id @default(cuid())
+  title   String
+  content String
 
   quiz_id String
-  quiz Quizzes @relation(fields: [quiz_id], references: [id])
+  quiz    Quizzes @relation(fields: [quiz_id], references: [id])
 
   group_questions GroupQuestions[]
 }
 
 model GroupQuestions {
-  id String @id @default(cuid())
-  title String
-  image String?
-  type String?
+  id              String  @id @default(cuid())
+  title           String
+  image           String?
+  type            String?
+  summary_title   String?
+  summary_content String?
 
   passage_id String
-  passage Passages @relation(fields: [passage_id], references: [id])
+  passage    Passages @relation(fields: [passage_id], references: [id])
 
   questions Questions[]
 }
@@ -93,16 +97,24 @@ model GroupQuestions {
 model Questions {
   id String @id @default(cuid())
 
+  question_name String?
+  option_a      String?
+  option_b      String?
+  option_c      String?
+  option_d      String?
+
   group_question_id String
-  group_quesstion GroupQuestions @relation(fields: [group_question_id], references: [id])
+  group_quesstion   GroupQuestions @relation(fields: [group_question_id], references: [id])
+
+  answer Answers?
 }
 
 model Answers {
-  id String @id @default(cuid())
-}
+  id          String @id @default(cuid())
+  answer_name String
 
-model QuestionOptions{
-  id String @id @default(cuid())
+  question_id String    @unique
+  question    Questions @relation(fields: [question_id], references: [id])
 }
 
 // https://tuhocielts.dolenglish.vn/luyen-thi-ielts/ielts-online-test-luyen-tap-cambridge-ielts-16-test-4-reading

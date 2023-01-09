@@ -3,13 +3,15 @@
   import Question from "../question.svelte";
 	import Text from "../text.svelte";
 
-  export let group_index
-  export let passage_index
-  let active = null;
+  export let data
+
+  const changeAnswer = (index,value) => {
+    data[index]['answer'] = value
+  }
 </script>
 
-<Question label="questions" let:index>
-  <Text label="question name"/>
+<Question bind:data={data} label="questions" let:index>
+  <Text bind:data={data[index]['question_name']} label="question name"/>
 
   <div class="mt-4">
     <p class="text-xs font-semibold text-primary mb-1.5 capitalize">
@@ -17,45 +19,33 @@
     </p>
     <div class="flex -mx-2 flex-wrap">
       <div class="w-1/3 px-2 mb-4">
-        <input 
-          type="radio" 
-          name="passage[{passage_index}]group[{group_index}]question_answer[{index}]" 
-          id="passage[{passage_index}]group[{group_index}]question_answer[{index}]true" 
-          value="true" 
-          class="sr-only"
+        <button 
+          class="item-answer {data[index]['answer'] == 'true' ? 'active' : ''}" 
+          on:click|preventDefault={() => changeAnswer(index, 'true')}
         >
-        <label class="item-answer" for="passage[{passage_index}]group[{group_index}]question_answer[{index}]true" >
           <span class="grid w-7 h-7 place-items-center rounded-full bg-gray-200">A</span>
           <span>True</span>
-        </label>
+        </button>
       </div>
 
       <div class="w-1/3 px-2 mb-4">
-        <input 
-          type="radio" 
-          name="passage[{passage_index}]group[{group_index}]question_answer[{index}]" 
-          id="passage[{passage_index}]group[{group_index}]question_answer[{index}]false" 
-          value="false" 
-          class="sr-only"
+        <button 
+          class="item-answer {data[index]['answer'] == 'false' ? 'active' : ''}" 
+          on:click|preventDefault={() => changeAnswer(index, 'false')}
         >
-        <label class="item-answer" for="passage[{passage_index}]group[{group_index}]question_answer[{index}]false" >
           <span class="grid w-7 h-7 place-items-center rounded-full bg-gray-200">B</span>
           <span>False</span>
-        </label>
+        </button>
       </div>
 
       <div class="w-1/3 px-2 mb-4">
-        <input 
-          type="radio" 
-          name="passage[{passage_index}]group[{group_index}]question_answer[{index}]" 
-          id="passage[{passage_index}]group[{group_index}]question_answer[{index}]notGive" 
-          value="not_give" 
-          class="sr-only"
+        <button 
+          class="item-answer {data[index]['answer'] == 'not_give' ? 'active' : ''}" 
+          on:click|preventDefault={() => changeAnswer(index, 'not_give')}
         >
-        <label class="item-answer" for="passage[{passage_index}]group[{group_index}]question_answer[{index}]notGive">
           <span class="grid w-7 h-7 place-items-center rounded-full bg-gray-200">C</span>
           <span>Not give</span>
-        </label>
+        </button>
       </div>
     </div>
   </div>
@@ -65,8 +55,7 @@
   .item-answer {
     @apply w-full flex items-center space-x-2 rounded border bg-white py-1 px-2 cursor-pointer font-semibold;
   }
-  .item-answer:hover,
-  input[type="radio"]:checked + .item-answer {
+  .item-answer.active {
     @apply border-orange-600 text-orange-600;
   }
 </style>

@@ -3,11 +3,14 @@
 	import GroupQuestion from "./group_question.svelte";
 	import RichText from "./rich_text.svelte";
   export let label = ''
-  export let data = [{}]
+  export let data = []
 
   const addToData = () => {
     data = [...data, {
+      content: '',
+      group_questions: []
     }]
+    show_item = data.length - 1
   }
 
   let show_item = null
@@ -41,9 +44,9 @@
         <Collapse show={show_item == index}>
           <div class="bg-orange-100 px-4 py-6">
             <div class="mb-4">
-              <RichText label="message" height="{300}" />
+              <RichText bind:data={item.content} label="content" height="{300}" />
             </div>
-            <GroupQuestion label="group_questions" passage_index={index} />
+            <GroupQuestion bind:data={item.group_questions} />
           </div>
         </Collapse>
         <!-- {/if} -->
