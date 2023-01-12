@@ -18,4 +18,27 @@
       <span class="text-3xl font-bold text-primary">Recent work</span>
     </div>
   </div>
+
+  <div class="mt-7">
+    <div class="flex -mx-4">
+      <div class="w-1/2 px-4 mb-8">
+        <h3 class="text-xl font-bold">CAM16 - Reading Test 4</h3>
+        <p class="mt-2 mb-3 text-gray-500">12K Lượt Làm</p>
+        <a href="/practice/cam16" class="cam-btn">
+          <span class="icon text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="m9 17 8-5-8-5z"></path></svg>
+          </span>
+          <span>Làm bài</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </Container>
+
+<div class="h-screen"></div>
+
+<style lang="postcss">
+  .cam-btn {
+    @apply inline-flex space-x-2 items-center p-3 rounded-lg border hover:border-red-600;
+  }
+</style>

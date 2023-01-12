@@ -12,6 +12,6 @@
     </span> -->
   </p>
   <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">
-    <textarea name={name} class="w-full h-20 resize-none px-4 py-2" bind:value={data}></textarea>
+    <textarea name={name} class="w-full h-20 px-4 py-2" bind:value={data}></textarea>
   </div>
 </div>

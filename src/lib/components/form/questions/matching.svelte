@@ -4,9 +4,43 @@
 	import Text from "../text.svelte";
 
   export let data
-  $: data.map(v => ({...v, answer: v.question_name}))
+  export let options
+
+  if (!options.suggestions) {
+    options.suggestions = []
+  }
+
+  $: if (data.length) {
+    if (data.length > options.suggestions.length) {
+      let temp = new Array(data.length - options.suggestions.length).fill('')
+      options.suggestions = [...options.suggestions, ...temp]
+    }
+  }
 </script>
 
-<Question bind:data={data} let:index>
-  <Text bind:data={data[index]['question_name']} label="question name & answer" placeholder="An increasing divergence of attitudes towards Al"/>
-</Question>
+<div class="mt-4 flex flex-wrap -mx-2">
+  <div class="w-1/2 px-2 mb-4">
+    <Question label="suggestions" bind:data={options.suggestions} let:index>
+      <div class="">
+        <p class="text-xs font-semibold text-primary mb-1.5 capitalize">
+          answer <span class="text-red-600">*</span>
+        </p>
+        <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">
+          <input type="text" bind:value={options.suggestions[index]['answer']} class="w-full px-4 py-2" placeholder="canal">
+        </div>
+      </div>
+    </Question>
+  </div>
+  <div class="w-1/2 px-2 mb-4">
+    <Question bind:data={data} let:index>
+      <div class="">
+        <p class="text-xs font-semibold text-primary mb-1.5 capitalize">
+          answer <span class="text-red-600">*</span>
+        </p>
+        <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">
+          <input type="text" bind:value={data[index]['answer']} class="w-full px-4 py-2" placeholder="canal">
+        </div>
+      </div>
+    </Question>
+  </div>
+</div>

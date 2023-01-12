@@ -6,14 +6,6 @@
   * {
     @apply border-[#dcdce4];
   }
-  body {
-    background-color: rgb(246, 246, 249);
-    @apply text-[#555];
-  }
-
-  h1,h2,h3,h4,h5 {
-    @apply text-[#333];
-  }
 
   input, select, textarea {
     background: transparent;
@@ -92,15 +84,19 @@
   }
 
   .btn {
-    @apply block px-4 py-1.5 rounded border border-gray-300 bg-white hover:bg-gray-200;
+    @apply block px-4 py-1.5 rounded border border-gray-300 bg-white hover:bg-gray-200 font-semibold;
   }
 
   .btn-icon {
-    @apply flex space-x-2 items-center pl-2 pr-4 py-1.5 rounded border border-gray-300 bg-white hover:bg-gray-200;
+    @apply flex space-x-2 items-center pl-2 pr-4 py-1.5 rounded border border-gray-300 bg-white hover:bg-gray-200 font-semibold;
   }
 
   .btn-orange {
     @apply bg-orange-600 text-white hover:bg-orange-500 border-orange-600;
+  }
+
+  .btn-red {
+    @apply bg-red-600 text-white hover:bg-red-500 border-red-600;
   }
 }
 

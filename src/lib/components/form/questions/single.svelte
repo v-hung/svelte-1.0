@@ -61,7 +61,6 @@
   .item-answer {
     @apply w-full flex items-center space-x-2 rounded border bg-white py-1 px-2 cursor-pointer font-semibold;
   }
-  .item-answer:hover,
   .item-answer.active {
     @apply border-orange-600 text-orange-600;
   }

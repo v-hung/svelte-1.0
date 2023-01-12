@@ -111,7 +111,7 @@
       data = file_url
     }
 
-    show_modal = false
+    toggleModal(false)
   }
 </script>
 

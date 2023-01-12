@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -85,8 +85,7 @@ model GroupQuestions {
   title           String
   image           String?
   type            String?
-  summary_title   String?
-  summary_content String?
+  options         Json?
 
   passage_id String
   passage    Passages @relation(fields: [passage_id], references: [id])

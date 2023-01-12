@@ -18,8 +18,7 @@
     data = [...data, {
       type: item.type,
       // label: item.label,
-      summary_title: '',
-      summary_content: '',
+      options: {},
       image: '',
       questions: []
     }]
@@ -55,10 +54,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M11.178 19.569a.998.998 0 0 0 1.644 0l9-13A.999.999 0 0 0 21 5H3a1.002 1.002 0 0 0-.822 1.569l9 13z"></path></svg>
           </span>
           <span class="font-semibold">{group_questions.find(v => item.type == v.type).label ?? "Group question"}</span>
-          <span class="!ml-auto icon w-6 h-6 p-1 cursor-pointer">
+          <span 
+            class="!ml-auto icon w-6 h-6 p-1 cursor-pointer hover:text-red-600"
+            on:click|preventDefault|stopPropagation={() => data = data.filter((v,i) => i != index)}
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z"></path></svg>
           </span>
-          <span class="icon w-6 h-6 p-1 cursor-pointer">
+          <span class="icon w-6 h-6 p-1 hover:text-blue-600 cursor-move">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10h4v4H7zm0-6h4v4H7zm0 12h4v4H7zm6-6h4v4h-4zm0-6h4v4h-4zm0 12h4v4h-4z"></path></svg>
           </span>
         </div>
@@ -74,11 +76,11 @@
             {:else if item.type == "single"}
               <Single bind:data={item.questions} />
             {:else if item.type == "summary"}
-              <Summary bind:data={item.questions} bind:summary_title={item.summary_title} bind:summary_content={item.summary_content} />
+              <Summary bind:data={item.questions} bind:options={item.options} />
             {:else if item.type == "yes-no"}
               <YesNo bind:data={item.questions} />
             {:else if item.type == "matching"}
-              <Matching bind:data={item.questions} />
+              <Matching bind:data={item.questions} bind:options={item.options} />
             {/if}
           </div>
         </Collapse>
@@ -87,7 +89,7 @@
     {/each}
 
     <div class="flex justify-center">
-      <div class="btn-add {show_add ? 'show' : ''}">
+      <div class="btn-add !w-56 {show_add ? 'show' : ''}">
         <button
           class="flex items-center justify-center space-x-2 w-full px-4 py-2 cursor-pointer text-orange-600 transition-colors"
           on:click|preventDefault={() => show_add = !show_add}
@@ -96,7 +98,7 @@
             <span class="icon w-4 h-4">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path></svg>
             </span>
-            <span class="font-semibold">Add new entry</span>
+            <span class="font-semibold">Add new group question</span>
           {:else}
             <span class="icon w-4 h-4">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>

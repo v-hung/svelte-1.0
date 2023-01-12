@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ locals, url, params, cookies }) => 
 
     const result = await res.json()
 
-    console.log({result})
+    // console.log({result})
 
     if (result.error) {
       throw error(404, result.error)

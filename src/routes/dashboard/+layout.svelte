@@ -195,6 +195,14 @@
 </div>
 
 <style lang="postcss">
+  :global(body) {
+    background-color: rgb(246, 246, 249);
+    @apply text-[#555];
+  }
+
+  :global(h1,h2,h3,h4,h5) {
+    @apply text-[#333];
+  }
   .left-sidebar{
   }
   .left-sidebar.sidebar-collapse .logo-title {
