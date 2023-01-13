@@ -89,7 +89,7 @@
     {/each}
 
     <div class="flex justify-center">
-      <div class="btn-add !w-56 {show_add ? 'show' : ''}">
+      <div class="btn-add {show_add ? 'show' : ''}">
         <button
           class="flex items-center justify-center space-x-2 w-full px-4 py-2 cursor-pointer text-orange-600 transition-colors"
           on:click|preventDefault={() => show_add = !show_add}
@@ -144,7 +144,7 @@
   } */
 
   .list-rounded-2 .btn-add {
-    @apply w-40 bg-white rounded-full border overflow-hidden;
+    @apply w-56 bg-white rounded-full border overflow-hidden;
   }
   .list-rounded-2 .btn-add:hover,
   .list-rounded-2 .btn-add.show {

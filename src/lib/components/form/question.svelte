@@ -7,7 +7,11 @@
   const addToData = () => {
     data = [...data, {
       title: '',
-      answer: null
+      answer: null,
+      option_a: '',
+      option_b: '',
+      option_c: '',
+      option_d: ''
     }]
 
     show_item = data.length - 1

@@ -72,7 +72,7 @@ model Quizzes {
 model Passages {
   id      String @id @default(cuid())
   title   String
-  content String
+  content String @db.Text
 
   quiz_id String
   quiz    Quizzes @relation(fields: [quiz_id], references: [id])
@@ -82,9 +82,9 @@ model Passages {
 
 model GroupQuestions {
   id              String  @id @default(cuid())
+  type            String
   title           String
   image           String?
-  type            String?
   options         Json?
 
   passage_id String

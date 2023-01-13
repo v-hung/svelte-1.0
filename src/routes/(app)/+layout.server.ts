@@ -14,8 +14,7 @@ export const load: LayoutServerLoad = async ({ locals, url }) => {
       id: true,
       name: true,
       email: true,
-      image: true,
-      password: true
+      image: true
     }
   })
 

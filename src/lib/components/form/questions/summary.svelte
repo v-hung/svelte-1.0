@@ -27,7 +27,7 @@
       data = [...data, ...temp]
 
       if (data.length > options.suggestions.length) {
-        let temp = new Array(data.length - options.suggestions.length).fill('')
+        let temp = new Array(data.length - options.suggestions.length).fill({title: ''})
         options.suggestions = [...options.suggestions, ...temp]
       }
     }
@@ -50,10 +50,10 @@
     <Question label="suggestions" bind:data={options.suggestions} let:index>
       <div class="">
         <p class="text-xs font-semibold text-primary mb-1.5 capitalize">
-          answer <span class="text-red-600">*</span>
+          suggestion <span class="text-red-600">*</span>
         </p>
         <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">
-          <input type="text" bind:value={options.suggestions[index]} class="w-full px-4 py-2" placeholder="canal">
+          <input type="text" bind:value={options.suggestions[index]['title']} class="w-full px-4 py-2" placeholder="suggestion">
         </div>
       </div>
     </Question>
