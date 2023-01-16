@@ -5,13 +5,19 @@
 	import { clickOutside } from '$lib/utils/clickOutSide';
   import { page } from "$app/stores";
 	import Diagram from '$lib/client/diagram.svelte';
+	import TruFalse from '$lib/client/tru_false.svelte';
+	import Short from '$lib/client/short.svelte';
+	import Single from '$lib/client/single.svelte';
+	import Summary from '$lib/client/summary.svelte';
+	import YesNo from '$lib/client/yes-no.svelte';
+	import Matching from '$lib/client/matching.svelte';
 
   export let data
   console.log(data)
   
   let passage_index = 0
   let question_index = 0
-  let passages = data.quizze.passages.map((v,i) => {
+  let passages = data.quiz.passages.map((v,i) => {
     let question_count = v.group_questions.reduce((a,c) => {
       return a + c.questions.length
     },0)
@@ -39,12 +45,12 @@
     }
   })
 
-  const getPercent = (passages) => {
-    let answer_count = passages.group_questions.reduce((a,c) => {
+  const getPercent = (passage) => {
+    let answer_count = passage.group_questions.reduce((a,c) => {
       return a + c.questions.filter(v => v.answer).length
     },0)
 
-    let a = answer_count / passages.question_count * 100
+    let a = answer_count / passage.question_count * 100
     a = a < 0 ? 0 : ((a > 100) ? 100 : a)
 
     return 292.796 / 100 * a
@@ -91,9 +97,21 @@
               <span class="pl-4">{group_question.title}</span>
             </div>
             
-            <div class="mt-4 rounded-xl px-4 py-3 bg-white">
+            <div class="mt-4 group-question-wrapper">
               {#if group_question.type == 'diagram'}
                 <Diagram bind:group_question={passages[passage_index].group_questions[passages[passage_index].group_question_index]}/>
+              {:else if group_question.type == 'true-false'}
+                <TruFalse bind:group_question={passages[passage_index].group_questions[passages[passage_index].group_question_index]} />
+              {:else if group_question.type == 'short'}
+                <Short bind:group_question={passages[passage_index].group_questions[passages[passage_index].group_question_index]} />
+              {:else if group_question.type == 'single'}
+                <Single bind:group_question={passages[passage_index].group_questions[passages[passage_index].group_question_index]} />
+              {:else if group_question.type == 'summary'}
+                <Summary bind:group_question={passages[passage_index].group_questions[passages[passage_index].group_question_index]} />
+              {:else if group_question.type == 'yes-no'}
+                <YesNo bind:group_question={passages[passage_index].group_questions[passages[passage_index].group_question_index]} />
+              {:else if group_question.type == 'matching'}
+                <Matching bind:group_question={passages[passage_index].group_questions[passages[passage_index].group_question_index]} />
               {/if}
             </div>
           {/if}
@@ -110,13 +128,16 @@
             <img src="https://suijm9clouobj.vcdn.cloud/PRIVATE/MEDIA/7606d599-4920-4860-8fb1-de3ee721bf85.png" alt="" class="w-full h-full object-cover">
           </div>
           <div class="w-36">
-            <h5 class="font-semibold truncate">CAM16 - Reading Test 4</h5>
+            <h5 class="font-semibold truncate">{data.quiz.title}</h5>
             <p class="text-sm text-gray-500">Roman tunnels</p>
           </div>
         </div>
   
         {#each passages as passage, index}
           {@const percent = getPercent(passage) }
+          {@const answer_count = passage.group_questions.reduce((a,c) => {
+            return a + c.questions.filter(v => v.answer).length
+          },0)}
           <button
             class="passage flex items-center space-x-2 {index == passage_index ? 'active' : ''}"
             on:click|preventDefault={() => passage_index = index}
@@ -137,7 +158,7 @@
                </svg>
               </span>
               <span class="absolute w-full h-full top-0 left-0 grid place-items-center text-xs">
-                0 / 13
+                {answer_count} / {passage.question_count}
               </span>
             </div>
             <div class="mb-1">
@@ -183,9 +204,24 @@
   </section>
 </div>
 
+
+
 <style>
   .practice-container {
     @apply w-full max-w-[1680px] mx-auto px-4;
+  }
+
+  .group-question-wrapper :global(.question) {
+    @apply flex items-center space-x-2 text-sky-600 font-semibold;
+  }
+
+  .group-question-wrapper :global(.question .input) {
+    margin-left: .75rem;
+    @apply min-w-[3.5rem] border-b-2 font-normal text-[#333] whitespace-nowrap;
+  }
+
+  .group-question-wrapper :global(.question .input:focus) {
+    @apply outline-none border-sky-600;
   }
 
   .passage {

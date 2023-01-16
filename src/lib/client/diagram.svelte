@@ -2,7 +2,7 @@
   export let group_question
 </script>
 
-<div class="flex -mx-2">
+<div class="flex -mx-2 rounded-xl px-4 py-3 bg-white">
   <div class="flex-none w-96 px-2 mb-4">
     <img src="{group_question.image}" alt="" class="w-full">
   </div>
@@ -32,13 +32,3 @@
     </div>
   </div>
 </div>
-
-<style lang="postcss">
-  .question {
-    @apply flex items-center space-x-2 text-sky-600 font-semibold;
-  }
-
-  .question .input {
-    @apply min-w-[3.5rem] !ml-3 border-b-2 font-normal text-[#333] focus:outline-none focus:border-sky-600 whitespace-nowrap;
-  }
-</style>

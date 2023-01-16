@@ -3,7 +3,7 @@ import { fail, redirect, error } from '@sveltejs/kit';
 import prisma from "$lib/server/prismadb";
 
 export const load: PageServerLoad = async (event) => {
-  const quizze = await prisma.quizzes.findFirst({
+  const quiz = await prisma.quizzes.findFirst({
     include: {
       passages: {
         include: {
@@ -17,11 +17,11 @@ export const load: PageServerLoad = async (event) => {
     }
   })
 
-  if (!quizze) {
+  if (!quiz) {
     throw redirect(302, "/")
   }
 
   return {
-    quizze: quizze
+    quiz
   }
 }
