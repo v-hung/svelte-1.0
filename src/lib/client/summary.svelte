@@ -52,7 +52,8 @@
       <span class="whitespace-pre-wrap leading-loose">{text}</span>
 
       {#if text_index < list_content.length - 1}
-        <button 
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div 
           class="inline cursor-pointer px-4 relative"
           on:click|preventDefault={(e) => openModalChooseAnswer(e, text_index)}
         >
@@ -81,7 +82,7 @@
               </div>
             </div>
           {/if}
-        </button>
+        </div>
       {/if}
     {/each}
   </div>
