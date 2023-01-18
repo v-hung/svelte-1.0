@@ -7,11 +7,11 @@ export function clickOutside(node: HTMLElement) {
     }
   }
 
-  document.addEventListener('click', handleClick, true);
+  document.addEventListener('click', handleClick, false);
 
   return {
     destroy() {
-      document.removeEventListener('click', handleClick, true);
+      document.removeEventListener('click', handleClick, false);
     }
   }
 }
