@@ -2,9 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+.text-\$primary {
+  color: var(--text-primary);
+}
+
 @layer base {
+  :root {
+    --text-primary: #333;
+  }
+
   * {
     @apply border-[#dcdce4];
+  }
+
+  .text-\$primary {
+    color: var(--text-primary);
   }
 
   input, select, textarea {
@@ -101,7 +113,5 @@
 }
 
 @layer utilities {
-  .text-primary {
-    @apply text-[#333];
-  }
+  
 }

@@ -39,7 +39,7 @@
 </script>
 
 <div>
-  <p class="text-xs font-semibold text-primary mb-1.5 capitalize">
+  <p class="text-xs font-semibold text-$primary mb-1.5 capitalize">
     {label} <span class="text-red-600">*</span>
   </p>
   <div class="list-rounded-2 flex flex-col">

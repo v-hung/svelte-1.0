@@ -14,7 +14,7 @@
   <Text bind:data={data[index]['question_name']} label="question name"/>
 
   <div class="mt-4">
-    <p class="text-xs font-semibold text-primary mb-1.5 capitalize">
+    <p class="text-xs font-semibold text-$primary mb-1.5 capitalize">
       answer <span class="text-red-600">*</span>
     </p>
     <div class="flex -mx-2 flex-wrap">

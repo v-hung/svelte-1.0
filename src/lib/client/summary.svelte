@@ -54,7 +54,7 @@
 </script>
 
 <div class="rounded-xl px-4 py-3 bg-white">
-  <p class="text-xl text-primary">Suggest</p>
+  <p class="text-xl text-$primary">Suggest</p>
   <div class="flex flex-wrap -mx-2 mt-4">
     {#each suggestions as suggestion}
       <div class="w-1/3 px-2 mb-4 text-sm">
@@ -68,7 +68,7 @@
 </div>
 
 <div class="mt-4 rounded-xl px-4 py-3 bg-white">
-  <p class="text-xl text-primary font-semibold">{group_question.options.summary_title}</p>
+  <p class="text-xl text-$primary font-semibold">{group_question.options.summary_title}</p>
   <div class="mt-4">
     {#each list_content as text,text_index}
       <span class="whitespace-pre-wrap leading-loose">{text}</span>
@@ -97,7 +97,7 @@
           {#if group_question.questions[text_index].answer}
             <span class="text-blue-600 font-normal pointer-events-none">{group_question.questions[text_index].answer}</span>
           {:else}
-            <span class="text-gray-400 font-normal pointer-events-none">Click here to choose your answer</span>
+            <span class="text-gray-400 font-normal pointer-events-none text-sm">Click here to choose your answer</span>
           {/if}
         </div>
       {/if}

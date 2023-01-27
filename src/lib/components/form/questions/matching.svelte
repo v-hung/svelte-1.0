@@ -22,7 +22,7 @@
   <div class="w-1/2 px-2 mb-4">
     <Question label="suggestions" bind:data={options.suggestions} let:index>
       <div class="">
-        <p class="text-xs font-semibold text-primary mb-1.5 capitalize">
+        <p class="text-xs font-semibold text-$primary mb-1.5 capitalize">
           suggestion <span class="text-red-600">*</span>
         </p>
         <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">
@@ -34,7 +34,7 @@
   <div class="w-1/2 px-2 mb-4">
     <Question bind:data={data} let:index>
       <div class="">
-        <p class="text-xs font-semibold text-primary mb-1.5 capitalize">
+        <p class="text-xs font-semibold text-$primary mb-1.5 capitalize">
           answer <span class="text-red-600">*</span>
         </p>
         <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">

@@ -10,7 +10,7 @@
         <span class="icon w-4 h-4">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="1em" height="1em" font-size="18" color="blue100" data-testid="SvgComponent" class="IconArrowsArrowRight-sc-71dgak-0 kroQxV"><path fill="currentColor" fill-rule="evenodd" d="M15.038 6.343l-1.411 1.418 3.27 3.255-13.605.013.002 2 13.568-.013-3.215 3.23 1.417 1.41 5.644-5.67-5.67-5.643z" clip-rule="evenodd"></path></svg>
         </span>
-        <span class="font-semibold text-primary text-sm">{question.question_name}</span>
+        <span class="font-semibold text-$primary text-sm">{question.question_name}</span>
       </div>
 
       <div class="flex flex-col space-y-1 -mx-3 mt-2">

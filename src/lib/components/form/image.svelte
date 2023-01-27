@@ -116,7 +116,7 @@
 </script>
 
 <div>
-  <p class="text-xs font-semibold text-primary mb-1.5 capitalize">
+  <p class="text-xs font-semibold text-$primary mb-1.5 capitalize">
     {label} <span class="text-red-600">*</span>
     <span class="icon inline-block w-3 h-3">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zM4 12c0-.899.156-1.762.431-2.569L6 11l2 2v2l2 2 1 1v1.931C7.061 19.436 4 16.072 4 12zm14.33 4.873C17.677 16.347 16.687 16 16 16v-1a2 2 0 0 0-2-2h-4v-3a2 2 0 0 0 2-2V7h1a2 2 0 0 0 2-2v-.411C17.928 5.778 20 8.65 20 12a7.947 7.947 0 0 1-1.67 4.873z"></path></svg>
@@ -151,7 +151,7 @@
       on:click_outside={() => toggleModal(false)}
     >
       <div class="flex items-center justify-between w-full px-6 py-4 bg-gray-100">
-        <span class="font-semibold text-primary">Add new assets</span>
+        <span class="font-semibold text-$primary">Add new assets</span>
         <button 
           class="btn-icon pr-2" 
           on:click|preventDefault={() => toggleModal(false)}
@@ -168,7 +168,7 @@
               on:click|preventDefault={() => {}}
             >
               Browse
-              <span class="px-1 py-0.5 bg-gray-100 text-primary rounded">{storage_files.length}</span>
+              <span class="px-1 py-0.5 bg-gray-100 text-$primary rounded">{storage_files.length}</span>
             </button>
 
             <button class="ml-auto btn btn-orange"
@@ -190,7 +190,7 @@
                       </div>
                       <div class="p-4 py-2 flex justify-between items-start border-t">
                         <div class="text-xs">
-                          <p class="font-semibold text-primary">{item}</p>
+                          <p class="font-semibold text-$primary">{item}</p>
                           <!-- <p class="uppercase">{item.type}</p> -->
                         </div>
                         <div class="text-[10px] p-1 py-0.5 font-semibold rounded bg-gray-100">IMAGE</div>
@@ -233,7 +233,7 @@
                 <input type="file" name="imageFile" id="imageFile" class="sr-only" multiple={true} accept="image/*" bind:files={files}>
               </div>
             {:else if modal_tab == 'url'}
-              <p class="mb-2 font-semibold text-primary">URL</p>
+              <p class="mb-2 font-semibold text-$primary">URL</p>
               <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">
                 <textarea name="url" bind:value={file_url} class="w-full h-24 px-4 py-2 resize-none"></textarea>
               </div>
@@ -244,7 +244,7 @@
           <div class="relative">
             <div class="flex items-center justify-between">
               <div class="text-xs">
-                <div class="text-primary">{img_files.length} asset ready to upload</div>
+                <div class="text-$primary">{img_files.length} asset ready to upload</div>
                 <p>Manage the assets before adding them to the Media Library</p>
               </div>
               <button class="btn btn-orange" on:click|preventDefault={() => view = "assets"}>Add new assets</button>
@@ -268,7 +268,7 @@
                     </div>
                     <div class="p-4 py-2 flex justify-between items-start border-t">
                       <div class="text-xs">
-                        <p class="font-semibold text-primary">{item.name}</p>
+                        <p class="font-semibold text-$primary">{item.name}</p>
                         <p class="uppercase">{item.type}</p>
                       </div>
                       <div class="text-[10px] p-1 py-0.5 font-semibold rounded bg-gray-100">IMAGE</div>
@@ -289,7 +289,7 @@
         {/if}
       </div>
 
-      <div class="flex justify-between w-full px-6 py-6 font-semibold text-primary bg-gray-100">
+      <div class="flex justify-between w-full px-6 py-6 font-semibold text-$primary bg-gray-100">
         <button class="btn" on:click|preventDefault={() => toggleModal(false)}>Cancel</button>
         {#if view == "upload"}
           <button class="btn btn-orange" on:click|preventDefault={uploadFiles}>
