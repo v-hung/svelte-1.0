@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
-	import { invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
   import logo from '$lib/images/svelte-logo.svg';
 	import { clickOutside } from '$lib/utils/clickOutSide';
   import { page } from "$app/stores";
@@ -11,9 +11,12 @@
 	import Summary from '$lib/client/summary.svelte';
 	import YesNo from '$lib/client/yes-no.svelte';
 	import Matching from '$lib/client/matching.svelte';
+	import { slide } from 'svelte/transition';
 
   export let data
-  console.log(data)
+  // console.log(data)
+
+  let all_qeustion_info = true
   
   let passage_index = 0
   let question_index = 0
@@ -54,6 +57,82 @@
     a = a < 0 ? 0 : ((a > 100) ? 100 : a)
 
     return 292.796 / 100 * a
+  }
+
+  let group_question_prev = null,
+      group_question_next = null
+  
+  const watchGroupQuestion = (passages, passage_index) => {
+    if (passage_index == 0 ) {
+      if (passages[passage_index].group_question_index != 0)
+        group_question_prev = passages[passage_index].group_questions[passages[passage_index].group_question_index - 1]
+      else 
+        group_question_prev = null
+    } else {
+      if (passages[passage_index].group_question_index != 0) {
+        group_question_prev = passages[passage_index].group_questions[passages[passage_index].group_question_index - 1]
+      }
+      else {
+        group_question_prev = passages[passage_index - 1].group_questions.at(-1)
+      }
+    }
+
+    if (passage_index == passages.length - 1 ) {
+      if (passages[passage_index].group_question_index != passages[passage_index].group_questions.length - 1)
+        group_question_next = passages[passage_index].group_questions[passages[passage_index].group_question_index + 1]
+      else 
+        group_question_next = null
+    } else {
+      if (passages[passage_index].group_question_index != passages[passage_index].group_questions.length - 1) {
+        group_question_next = passages[passage_index].group_questions[passages[passage_index].group_question_index + 1]
+      }
+      else {
+        group_question_next = passages[passage_index + 1].group_questions[0]
+      }
+    }
+  }
+
+  $: watchGroupQuestion(passages, passage_index)
+
+  const changeGroupQuestion = (type: 'next' | 'prev') => {
+    if (type == 'prev') {
+      if (passages[passage_index].group_question_index != 0) {
+        passages[passage_index].group_question_index -= 1
+      }
+      else {
+        passage_index -= 1
+        passages[passage_index].group_question_index = (passages[passage_index].group_questions.length - 1)
+      }
+    }
+    else if (type == "next") {
+      if (passages[passage_index].group_question_index != passages[passage_index].group_questions.length - 1) {
+        passages[passage_index].group_question_index += 1
+      }
+      else {
+        passage_index += 1
+        passages[passage_index].group_question_index = 0
+      }
+    }
+  }
+
+  let check_submit = false
+  let unanswered_question = 0
+
+  const submit = () => {
+    let answer_count = 0,
+        question_count = 0
+
+    passages.forEach(v => {
+      v.group_questions.forEach(v2 => {
+        question_count += v2.questions.length
+        answer_count += v2.questions.filter(v => v.answer).length
+      })
+    })
+
+    unanswered_question = question_count - answer_count
+    if (unanswered_question) {
+      check_submit = true
+    }
   }
 </script>
 
@@ -158,7 +237,7 @@
                </svg>
               </span>
               <span class="absolute w-full h-full top-0 left-0 grid place-items-center text-xs">
-                {answer_count} / {passage.question_count}
+                {answer_count}/{passage.question_count}
               </span>
             </div>
             <div class="mb-1">
@@ -168,43 +247,122 @@
           </button>
         {/each}
   
-        <div class="!ml-auto">
-          <button class="flex items-center px-4 py-2 rounded-lg border-2 font-semibold hover:border-red-600 hover:text-red-600">
-            <span>Question 7 - 10</span>
-            <span class="icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path></svg>
-            </span>
-          </button>
+        <div class="!ml-auto flex items-center space-x-4">
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <span 
+            class="icon w-10 h-10 border-2 border-gray-300 p-2 rounded-full hover:bg-gray-300 cursor-pointer"
+            on:click={() => all_qeustion_info = !all_qeustion_info}
+          >
+            <svg class="transition-transform {all_qeustion_info ? 'rotate-180' : ''}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="m6.293 13.293 1.414 1.414L12 10.414l4.293 4.293 1.414-1.414L12 7.586z"></path></svg>
+          </span>
+
+          <!-- {#if passages[passage_index].group_questions[passages[passage_index].group_question_index]}
+            
+          {/if} -->
+
+          {#if group_question_prev}
+            <button 
+              class="flex items-center px-4 py-2 rounded-lg border-2 font-semibold hover:border-red-600 hover:text-red-600"
+              on:click|preventDefault={() => changeGroupQuestion("prev")}
+            >
+              <span class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 11H6.414l5.293-5.293-1.414-1.414L2.586 12l7.707 7.707 1.414-1.414L6.414 13H21z"></path></svg>
+              </span>
+              <span>Question {group_question_prev.questions[0].number} - {group_question_prev.questions.at(-1).number}</span>
+            </button>
+          {/if}
+
+          {#if group_question_next}
+            <button 
+              class="flex items-center px-4 py-2 rounded-lg border-2 font-semibold hover:border-red-600 hover:text-red-600"
+              on:click|preventDefault={() => changeGroupQuestion("next")}
+            >
+              <span>Question {group_question_next.questions[0].number} - {group_question_next.questions.at(-1).number}</span>
+              <span class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path></svg>
+              </span>
+            </button>
+          {:else}
+            <button 
+              class="flex items-center px-4 py-2 rounded-lg font-semibold bg-red-500 text-white hover:bg-red-400"
+              on:click|preventDefault={submit}
+            >
+              <span>Submit</span>
+              <span class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path></svg>
+              </span>
+            </button>
+          {/if}
         </div>
       </div>
     </div>
   </section>
   
-  <section class="flex-none bg-gray-50">
-    <div class="practice-container py-2">
-      <div class="flex space-x-8">
-        {#each passages[passage_index].group_questions as group_question, index}
-          <div class="text-xs">
-            <p class="text-gray-500">{group_question.title}</p>
-            <div class="flex space-x-2">
-              {#each group_question.questions as question}
-                <button 
-                  class="w-6 h-6 rounded-full border bg-gray-200 grid place-items-center 
-                  {question.answer ? 'border-blue-600 bg-blue-200' : ''}"
-                  on:click|preventDefault={() => passages[passage_index].group_question_index = index}
-                >
-                  {question.number}
-                </button>
-              {/each}
+  {#if all_qeustion_info}
+    <section 
+      class="flex-none bg-gray-50"
+      transition:slide
+    >
+      <div class="practice-container py-2">
+        <div class="flex space-x-8">
+          {#each passages[passage_index].group_questions as group_question, index}
+            <div class="text-xs">
+              <p class="text-gray-500">{group_question.title}</p>
+              <div class="flex space-x-2">
+                {#each group_question.questions as question}
+                  <button 
+                    class="w-6 h-6 rounded-full border bg-gray-200 grid place-items-center 
+                    {question.answer ? 'border-blue-600 bg-blue-200' : ''}"
+                    on:click|preventDefault={() => passages[passage_index].group_question_index = index}
+                  >
+                    {question.number}
+                  </button>
+                {/each}
+              </div>
             </div>
-          </div>
-        {/each}
+          {/each}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  {/if}
 </div>
 
+{#if check_submit}
+  <div class="fixed top-0 left-0 right-0 bottom-0 bg-black/70">
+    <div class="w-full max-w-lg mx-auto rounded-xl bg-white p-6 text-$primary">
+      <div class="flex items-center space-x-4">
+        <span class="icon w-10 h-10 text-yellow-500">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path></svg>
+        </span>
+        <span class="font-semibold text-xl">Missing sentence</span>
+      </div>
 
+      <div class="mt-6 font-medium">
+        You are still missing {unanswered_question} unfinished questions
+      </div>
+
+      <form action="?/submit" class="mt-6 flex space-x-4 justify-end" method="post"
+        use:enhance={({ form, data, action, cancel }) => {
+
+          return async ({ result, update }) => {
+            // await applyAction(result)
+            // browser.history.deleteAll()
+            goto('/static/test/jktkrn43fadf', { replaceState: true });
+            // document.location.replace("/static/test/jktkrn43fadf")
+            // await invalidateAll()
+          };
+        }}
+      >
+        <button 
+          class="px-4 py-2 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200"
+          on:click|preventDefault={() => check_submit = false}
+        >Review</button>
+
+        <button type="submit" class="px-4 py-2 rounded-lg font-semibold bg-red-500 text-white hover:bg-red-400">Submit regardless</button>
+      </form>
+    </div>
+  </div>
+{/if}
 
 <style>
   .practice-container {

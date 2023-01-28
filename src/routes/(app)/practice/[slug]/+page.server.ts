@@ -1,5 +1,5 @@
 import type { PageServerLoad } from "./$types"
-import { fail, redirect, error } from '@sveltejs/kit';
+import { fail, redirect, error, type Actions } from '@sveltejs/kit';
 import prisma from "$lib/server/prismadb";
 
 export const load: PageServerLoad = async (event) => {
@@ -25,3 +25,11 @@ export const load: PageServerLoad = async (event) => {
     quiz
   }
 }
+
+export const actions: Actions = {
+  submit: async (event) => {
+    // calculate and save the result
+
+    return { success: true }
+  }
+};
