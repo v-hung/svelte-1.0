@@ -3,7 +3,7 @@
 	import { romanize } from "$lib/utils/helper";
 	import { onMount, tick } from "svelte";
 	import { scale } from "svelte/transition";
-  import anime from "animejs";
+  import anime from "animejs/lib/anime.es";
 
   export let group_question
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('')
