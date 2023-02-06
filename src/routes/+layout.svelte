@@ -1,6 +1,8 @@
 <script lang="ts">
 	import './styles.css';
   import { navigating } from "$app/stores";
+	import { onMount } from 'svelte';
+	import { io } from '$lib/socket-io';
 
   let line_process: HTMLElement | null = null
 
@@ -25,6 +27,15 @@
       }, 100);
     }
   }
+
+  onMount(() => {
+    io.on("message", message => {
+      console.log(message)
+    })
+    io.on("name", name => {
+      console.log(name)
+    })
+  })
 </script>
 
 <div id="app">

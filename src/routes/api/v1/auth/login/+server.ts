@@ -42,7 +42,6 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     image: user_data.image,
   }
 
-
   const token = await signToken(user)
   const refresh_token = await signToken(user, remember ? '60d' : '1d')
 

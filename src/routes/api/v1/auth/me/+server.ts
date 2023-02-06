@@ -3,16 +3,20 @@ import type { RequestHandler } from "./$types";
 import { json } from '@sveltejs/kit';
 
 import prisma from "$lib/server/prismadb";
+import { verifyToken } from '$lib/utils/jwt';
 
-export const GET:RequestHandler = async ({ locals }) => {
-  const session = await locals.session
-  if (!session.user) {
-    throw error(401, 'Invalid Token');
+export const POST:RequestHandler = async ({ locals, request, cookies }) => {
+  const token = request.headers.get('authorization')?.split(' ')[1]  || cookies.get('token') || null
+
+  const decoded = await verifyToken(token)
+
+  if (!decoded) {
+    throw error(401, 'Unauthorized');
   }
 
   const user = await prisma.user.findUnique({
     where: {
-      id: session?.user?.id || ""
+      id: decoded?.id || ""
     },
     select: {
       id: true,
@@ -26,5 +30,5 @@ export const GET:RequestHandler = async ({ locals }) => {
     throw error(404, 'User not exists');
   }
 
-  return json(user);
+  return json({user});
 }
