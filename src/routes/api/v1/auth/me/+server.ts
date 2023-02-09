@@ -5,18 +5,20 @@ import { json } from '@sveltejs/kit';
 import prisma from "$lib/server/prismadb";
 import { verifyToken } from '$lib/utils/jwt';
 
-export const POST:RequestHandler = async ({ locals, request, cookies }) => {
-  const token = request.headers.get('authorization')?.split(' ')[1]  || cookies.get('token') || null
+export const GET:RequestHandler = async ({ locals, request, cookies }) => {
+  // const token = request.headers.get('authorization')?.split(' ')[1]  || cookies.get('token') || null
 
-  const decoded = await verifyToken(token)
+  // const decoded = await verifyToken(token)
 
-  if (!decoded) {
+  let user_id = locals.session?.user?.id
+
+  if (!user_id) {
     throw error(401, 'Unauthorized');
   }
 
   const user = await prisma.user.findUnique({
     where: {
-      id: decoded?.id || ""
+      id: user_id || ""
     },
     select: {
       id: true,

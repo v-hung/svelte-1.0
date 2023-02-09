@@ -5,6 +5,7 @@
 	import { clickOutside } from '$lib/utils/clickOutSide';
   import { page } from "$app/stores";
 	import { slide } from 'svelte/transition';
+	import Messages from '$lib/components/messages.svelte';
 
   export let data
   
@@ -120,10 +121,11 @@
     <div class="flex-none w-full h-16 shadow-lg shadow-gray-200"></div>
   {/if}
   
-  <div class="flex-grow min-h-0 flex flex-col">
+  <div class="flex-grow min-h-0 flex flex-col bg-[#F0F2F5]">
     <slot/>
   </div>
 </div>
+<Messages />
 
 <style lang="postcss">
   #client {

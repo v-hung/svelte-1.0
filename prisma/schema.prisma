@@ -38,14 +38,18 @@ model Account {
 // }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   password      String?
   accounts      Account[]
   // sessions      Session[]
+
+  messages      Messages[]
+  rooms Rooms[]
+  // RoomsOnUsers  RoomsOnUsers[]
 }
 
 model VerificationToken {
@@ -81,11 +85,11 @@ model Passages {
 }
 
 model GroupQuestions {
-  id              String  @id @default(cuid())
-  type            String
-  title           String
-  image           String?
-  options         Json?
+  id      String  @id @default(cuid())
+  type    String
+  title   String
+  image   String?
+  options Json?
 
   passage_id String
   passage    Passages @relation(fields: [passage_id], references: [id])
@@ -114,6 +118,38 @@ model Answers {
 
   question_id String    @unique
   question    Questions @relation(fields: [question_id], references: [id])
+}
+
+// messages
+model Rooms {
+  id           String         @id @default(cuid())
+
+  messages     Messages[]
+  // RoomsOnUsers RoomsOnUsers[]
+  users User[]
+}
+
+// model RoomsOnUsers {
+//   roomId String
+//   room   Rooms  @relation(fields: [roomId], references: [id])
+//   userId String
+//   user   User   @relation(fields: [userId], references: [id])
+
+//   @@id([roomId, userId])
+// }
+
+model Messages {
+  id       String  @id @default(cuid())
+  senderID String
+  sender   User    @relation(fields: [senderID], references: [id])
+  isRead   Boolean @default(false)
+  body     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  roomId String
+  room   Rooms  @relation(fields: [roomId], references: [id])
 }
 
 // https://tuhocielts.dolenglish.vn/luyen-thi-ielts/ielts-online-test-luyen-tap-cambridge-ielts-16-test-4-reading
