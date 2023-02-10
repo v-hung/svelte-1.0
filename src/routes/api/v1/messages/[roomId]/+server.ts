@@ -28,7 +28,8 @@ export const GET:RequestHandler = async ({ locals, request, cookies, params, url
         },
         id: roomId
       },
-    }
+    },
+    orderBy: { createdAt: 'desc' }
   })
 
   return json({messages, page, perPage});

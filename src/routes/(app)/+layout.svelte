@@ -27,7 +27,7 @@
           </div>
         </a>
     
-        <div class="!ml-auto self-stretch flex items-stretch space-x-6">
+        <div class="hidden md:flex !ml-auto self-stretch items-stretch space-x-6">
           <div class="nav-link">English News</div>
           <div class="dropdown">
             <div class="text">
@@ -66,56 +66,58 @@
         </div>
     
         <!-- user -->
-        {#if data.user}
-          <div class="relative" use:clickOutside on:click_outside={() => toggle_user = false}>
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div class="flex space-x-1 items-center" on:click|preventDefault={() => toggle_user = !toggle_user}>
-              <div class="w-10 h-10 border rounded-full overflow-hidden cursor-pointer">
-                <!-- svelte-ignore a11y-img-redundant-alt -->
-                <img src={data.user?.image} alt="Photo by {data.user?.name}" class="w-full h-full object-cover" loading="lazy" />
-              </div>
-              <span class="icon transition-all cursor-pointer {toggle_user ? 'rotate-180' : ''}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
-              </span>
-            </div>
-            {#if toggle_user}
-              <div transition:slide={{ duration: 300 }} class="absolute top-full right-0 z-10">
-                <div class="min-w-[10rem] flex flex-col space-y-2 mt-1 p-3 bg-white shadow text-sm rounded">
-                  <a href="/user" class="user-link bg-orange-100 text-orange-700 hover:!bg-orange-200">
-                    <span class="icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"></path></svg>
-                    </span>
-                    <span>User Information</span>
-                  </a>
-                  <a href="/" class="user-link {pathname == "settings" ? "active" : ''}">
-                    <span class="icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path></svg>
-                    </span>
-                    <span>Pro Account</span>
-                  </a>
-                  <form action="/auth/login?/logout" method="post"
-                    use:enhance={({ form, data, action, cancel }) => {
-                      return async ({ result, update }) => {
-                        await applyAction(result)
-                        await invalidateAll()
-                      };
-                    }}
-                    class=""
-                  >
-                    <button type="submit" class="w-full user-link text-sm">
-                      <span class="logout-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3z"></path><path d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"></path></svg>
-                      </span>
-                      <span>Logout</span>
-                    </button>
-                  </form>
+        <div class="!ml-auto">
+          {#if data.user}
+            <div class="relative" use:clickOutside on:click_outside={() => toggle_user = false}>
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <div class="flex space-x-1 items-center" on:click|preventDefault={() => toggle_user = !toggle_user}>
+                <div class="w-10 h-10 border rounded-full overflow-hidden cursor-pointer">
+                  <!-- svelte-ignore a11y-img-redundant-alt -->
+                  <img src={data.user?.image} alt="Photo by {data.user?.name}" class="w-full h-full object-cover" loading="lazy" />
                 </div>
+                <span class="icon transition-all cursor-pointer {toggle_user ? 'rotate-180' : ''}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
+                </span>
               </div>
-            {/if}
-          </div>
-        {:else}
-          <a href="/auth/login" class="btn btn-red rounded-lg">Sign up</a>
-        {/if}
+              {#if toggle_user}
+                <div transition:slide={{ duration: 300 }} class="absolute top-full right-0 z-10">
+                  <div class="min-w-[10rem] flex flex-col space-y-2 mt-1 p-3 bg-white shadow text-sm rounded">
+                    <a href="/user" class="user-link bg-orange-100 text-orange-700 hover:!bg-orange-200">
+                      <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"></path></svg>
+                      </span>
+                      <span>User Information</span>
+                    </a>
+                    <a href="/" class="user-link {pathname == "settings" ? "active" : ''}">
+                      <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path></svg>
+                      </span>
+                      <span>Pro Account</span>
+                    </a>
+                    <form action="/auth/login?/logout" method="post"
+                      use:enhance={({ form, data, action, cancel }) => {
+                        return async ({ result, update }) => {
+                          await applyAction(result)
+                          await invalidateAll()
+                        };
+                      }}
+                      class=""
+                    >
+                      <button type="submit" class="w-full user-link text-sm">
+                        <span class="logout-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3z"></path><path d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"></path></svg>
+                        </span>
+                        <span>Logout</span>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              {/if}
+            </div>
+          {:else}
+            <a href="/auth/login" class="btn btn-red rounded-lg">Sign up</a>
+          {/if}
+        </div>
       </div>
     </div>
     <div class="flex-none w-full h-16 shadow-lg shadow-gray-200"></div>

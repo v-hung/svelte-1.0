@@ -37,16 +37,20 @@ export const POST:RequestHandler = async ({ locals, request, cookies }) => {
   const body = await request.json()
   let contactId: string = body.contactId
 
-  const room = await prisma.rooms.create({
-    data: {
+  let room = null
+
+  room = await prisma.rooms.findFirst({
+    where: {
       users: {
-        connect: [
-          { id: user_id },
-          { id: contactId }
-        ]
+        none: {
+          id: {
+            notIn: [user_id, contactId]
+          }
+        },
       }
     },
     select: {
+      id: true,
       users: {
         select: {
           id: true,
@@ -57,6 +61,29 @@ export const POST:RequestHandler = async ({ locals, request, cookies }) => {
       }
     }
   })
+
+  if (!room)
+    room = await prisma.rooms.create({
+      data: {
+        users: {
+          connect: [
+            { id: user_id },
+            { id: contactId }
+          ]
+        }
+      },
+      select: {
+        id: true,
+        users: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            image: true
+          }
+        }
+      }
+    })
 
   return json({room});
 }

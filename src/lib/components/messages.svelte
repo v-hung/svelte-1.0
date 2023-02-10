@@ -12,40 +12,14 @@
   let contacts = []
   let rooms = []
 
-  let listShowRoom = [
-    {
-      id: "cldwi80y70004w67o88qjy85v",
-      show: false,
-      textHolder: "",
-      messages: [],
-      page: 1,
-      users: [
-        {
-          id: "cldwi7uyh0000w67otparf036",
-          name: "Việt Hùng",
-          email: "viet.hung.2898@gmail.com",
-          emailVerified: null,
-          image: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&w=1000&q=80",
-          password: "$2a$12$DdT8mLJ0HE.ll0idvi.8XOpgnVtJ5ciY2/tfKfdMS1HmGIDceG6Zi"
-        },
-        {
-          id: "cldwi7uyi0002w67oa9zvzh78",
-          name: "Nam",
-          email: "nam@gmail.com",
-          emailVerified: null,
-          image: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80",
-          password: "$2a$12$/ydh8Wy6GZFuJ5ShYtWDkupba6cjR7Y4EghcrBVEWRYEliuI1RQMG"
-        }
-      ]
-    }
-]
+  let listShowRoom = []
 
   const fetchContacts = async () => {
     try {
       const res = await fetch('/api/v1/users')
       const body = await res.json()
 
-      return body.users
+      return body.users.filter(v => v.id != $page.data.user.id)
     }
     catch(e) {
       return []
@@ -66,7 +40,8 @@
 
   const createRoom = async (userId) => {
     let roomIndex = rooms.findIndex(room => {
-      return room?.users.findIndex(v => v.id == userId)
+      // console.log(room, room?.users.findIndex(v => v.id == userId))
+      return room?.users.findIndex(v => v.id == userId) >= 0 ? true : false
     })
 
     let room = null
@@ -89,33 +64,56 @@
     else {
       room = rooms[roomIndex]
     }
-
+    
     if (room) {
-      listShowRoom = [...listShowRoom, {
-        ...room, 
-        show: false,
-        textHolder: "",
-        messages: [],
-        page: 1
-      }]
+      let roomIndex2 = listShowRoom.findIndex(v => v.id == room.id)
+
+      if (roomIndex2 < 0) {
+        listShowRoom = [...listShowRoom, {
+          ...room, 
+          show: true,
+          messages: [],
+          page: 1
+        }]
+      }
+      else {
+        listShowRoom[roomIndex2].show = true
+      }
 
       tabShowRoom = 2
       isShowRooms = false
     }
   }
 
-  const addMessage = () => {
-    io.emit('message', {roomId: 1, body: 'sdfa', userId: "asdf"})
-  }
+  const showRoom = (roomId) => {
+    let room = rooms.find(v => v.id == roomId)
+    let roomIndex2 = listShowRoom.findIndex(v => v.id == roomId)
 
-  const showRooms = () => {
-    
+    if (roomIndex2 < 0) {
+      listShowRoom = [...listShowRoom, {
+        ...room, 
+        show: true,
+        messages: [],
+        page: 1
+      }]
+    }
+    else {
+      listShowRoom[roomIndex2].show = true
+    }
+
+    tabShowRoom = 2
+    isShowRooms = false
   }
 
   onMount(async () => {
-    io.on("message", message => {
-      console.log(message)
+    io.on("message", data => {
+      let findIndex = listShowRoom.findIndex(v => v.id == data.message.roomId)
+
+      if (findIndex >= 0) {
+        listShowRoom[findIndex].messages = [data.message, ...listShowRoom[findIndex].messages]
+      }
     })
+
     if ($page.data?.user) {
       io.emit("join", $page.data?.user?.id)
     }
@@ -175,7 +173,10 @@
             <div class="flex flex-col">
               {#each rooms as room}
                 {@const info = room?.users.find(v => v.id != $page.data?.user?.id)}
-                <button class="flex text-left space-x-2 py-2 px-4 hover:bg-blue-100">
+                <button 
+                  class="flex text-left space-x-2 py-2 px-4 hover:bg-blue-100"
+                  on:click|preventDefault={() => showRoom(room.id)}
+                >
                   <div class="flex-none">
                     <img src="{room?.image || info?.image}" alt="" class="w-10 h-10 rounded-full object-cover" loading="lazy">
                   </div>
@@ -199,9 +200,12 @@
       {#each listShowRoom as room}
         {@const info = room?.users.find(v => v.id != $page.data?.user?.id)}
 
-        <div class="w-12 h-12 rounded-full bg-white shadow">
+        <button 
+          class="w-12 h-12 rounded-full bg-white shadow overflow-hidden"
+          on:click|preventDefault={() => room.show = true}
+        >
           <img src="{room?.image || info?.image}" alt=" " class="w-full h-full object-cover" loading="lazy">
-        </div>
+        </button>
       {/each}
 
       <button

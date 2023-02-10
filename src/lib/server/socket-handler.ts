@@ -32,9 +32,9 @@ export default function injectSocketIO(server) {
               id: data?.roomId
             }
           },
-          id: {
-            not: data?.userId
-          }
+          // id: {
+          //   not: data?.userId
+          // }
         }
       })
 
