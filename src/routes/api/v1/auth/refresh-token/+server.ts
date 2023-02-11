@@ -13,13 +13,10 @@ import * as cookie from 'cookie';
 export const POST:RequestHandler = async ({  cookies, request  }) => {
   const body = await request.json()
   const refresh_token = body.refresh_token || cookies.get('refresh_token')
-  console.log(body)
 
   if (!refresh_token) {
     throw error(404, 'Refresh token not found')
   }
-
-  console.log(refresh_token)
 
   const refresh_token_db = await prisma.verificationToken.findFirst({
     where: {

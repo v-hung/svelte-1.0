@@ -12,10 +12,11 @@ export const GET:RequestHandler = async ({ locals, request, cookies, params, url
   if (!user_id) {
     throw error(401, 'Unauthorized');
   }
-
+  
   let roomId = params.roomId
   let page: number = +url.searchParams.get('page')|| 1
-
+  
+  console.log(roomId)
   const messages = await prisma.messages.findMany({
     take: perPage,
     skip: (page - 1) * perPage,
