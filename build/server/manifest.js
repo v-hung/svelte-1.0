@@ -4,25 +4,25 @@ const manifest = {
 	assets: new Set(["favicon.png","images/facebook.png","images/github.png","images/google.png","js/tinymce/icons/default/icons.min.js","js/tinymce/langs/README.md","js/tinymce/license.txt","js/tinymce/models/dom/model.min.js","js/tinymce/plugins/advlist/plugin.min.js","js/tinymce/plugins/anchor/plugin.min.js","js/tinymce/plugins/autolink/plugin.min.js","js/tinymce/plugins/autoresize/plugin.min.js","js/tinymce/plugins/autosave/plugin.min.js","js/tinymce/plugins/charmap/plugin.min.js","js/tinymce/plugins/code/plugin.min.js","js/tinymce/plugins/codesample/plugin.min.js","js/tinymce/plugins/directionality/plugin.min.js","js/tinymce/plugins/emoticons/js/emojiimages.js","js/tinymce/plugins/emoticons/js/emojiimages.min.js","js/tinymce/plugins/emoticons/js/emojis.js","js/tinymce/plugins/emoticons/js/emojis.min.js","js/tinymce/plugins/emoticons/plugin.min.js","js/tinymce/plugins/fullscreen/plugin.min.js","js/tinymce/plugins/help/plugin.min.js","js/tinymce/plugins/image/plugin.min.js","js/tinymce/plugins/importcss/plugin.min.js","js/tinymce/plugins/insertdatetime/plugin.min.js","js/tinymce/plugins/link/plugin.min.js","js/tinymce/plugins/lists/plugin.min.js","js/tinymce/plugins/media/plugin.min.js","js/tinymce/plugins/nonbreaking/plugin.min.js","js/tinymce/plugins/pagebreak/plugin.min.js","js/tinymce/plugins/preview/plugin.min.js","js/tinymce/plugins/quickbars/plugin.min.js","js/tinymce/plugins/save/plugin.min.js","js/tinymce/plugins/searchreplace/plugin.min.js","js/tinymce/plugins/table/plugin.min.js","js/tinymce/plugins/template/plugin.min.js","js/tinymce/plugins/visualblocks/plugin.min.js","js/tinymce/plugins/visualchars/plugin.min.js","js/tinymce/plugins/wordcount/plugin.min.js","js/tinymce/skins/content/dark/content.min.css","js/tinymce/skins/content/default/content.min.css","js/tinymce/skins/content/document/content.min.css","js/tinymce/skins/content/tinymce-5/content.min.css","js/tinymce/skins/content/tinymce-5-dark/content.min.css","js/tinymce/skins/content/writer/content.min.css","js/tinymce/skins/ui/oxide/content.inline.min.css","js/tinymce/skins/ui/oxide/content.min.css","js/tinymce/skins/ui/oxide/skin.min.css","js/tinymce/skins/ui/oxide/skin.shadowdom.min.css","js/tinymce/skins/ui/oxide-dark/content.inline.min.css","js/tinymce/skins/ui/oxide-dark/content.min.css","js/tinymce/skins/ui/oxide-dark/skin.min.css","js/tinymce/skins/ui/oxide-dark/skin.shadowdom.min.css","js/tinymce/skins/ui/tinymce-5/content.inline.min.css","js/tinymce/skins/ui/tinymce-5/content.min.css","js/tinymce/skins/ui/tinymce-5/skin.min.css","js/tinymce/skins/ui/tinymce-5/skin.shadowdom.min.css","js/tinymce/skins/ui/tinymce-5-dark/content.inline.min.css","js/tinymce/skins/ui/tinymce-5-dark/content.min.css","js/tinymce/skins/ui/tinymce-5-dark/skin.min.css","js/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.min.css","js/tinymce/themes/silver/theme.min.js","js/tinymce/tinymce.d.ts","js/tinymce/tinymce.min.js","js/tinymce.min.js","robots.txt"]),
 	mimeTypes: {".png":"image/png",".js":"application/javascript",".md":"text/markdown",".txt":"text/plain",".css":"text/css",".ts":"video/mp2t"},
 	_: {
-		entry: {"file":"_app/immutable/start-03b8305b.js","imports":["_app/immutable/start-03b8305b.js","_app/immutable/chunks/index-4e57025e.js","_app/immutable/chunks/singletons-94e6fee4.js","_app/immutable/chunks/parse-f0c618df.js"],"stylesheets":[],"fonts":[]},
+		entry: {"file":"_app/immutable/start-6434efe7.js","imports":["_app/immutable/start-6434efe7.js","_app/immutable/chunks/index-98f9187f.js","_app/immutable/chunks/singletons-11903ee4.js","_app/immutable/chunks/parse-f0c618df.js"],"stylesheets":[],"fonts":[]},
 		nodes: [
-			() => import('./chunks/0-bbca174b.js'),
-			() => import('./chunks/1-1cec1dea.js'),
-			() => import('./chunks/2-bbdc703e.js'),
-			() => import('./chunks/3-2f051d80.js'),
-			() => import('./chunks/4-d631c610.js'),
-			() => import('./chunks/5-011a94df.js'),
-			() => import('./chunks/6-1b66df4a.js'),
-			() => import('./chunks/7-7dbcb739.js'),
+			() => import('./chunks/0-47908791.js'),
+			() => import('./chunks/1-a0a79e74.js'),
+			() => import('./chunks/2-35865f8b.js'),
+			() => import('./chunks/3-7387cb42.js'),
+			() => import('./chunks/4-da8f2786.js'),
+			() => import('./chunks/5-f151b25b.js'),
+			() => import('./chunks/6-9e8b7ca7.js'),
+			() => import('./chunks/7-b3efe39b.js'),
 			() => import('./chunks/8-3deac7d5.js'),
-			() => import('./chunks/9-47b1f4b6.js'),
-			() => import('./chunks/10-54133b66.js'),
-			() => import('./chunks/11-d6b971ae.js'),
-			() => import('./chunks/12-342037cc.js'),
-			() => import('./chunks/13-689ffe04.js'),
-			() => import('./chunks/14-a2cc6a58.js'),
-			() => import('./chunks/15-7fae099b.js'),
-			() => import('./chunks/16-c051967f.js')
+			() => import('./chunks/9-ce9e949b.js'),
+			() => import('./chunks/10-5904af96.js'),
+			() => import('./chunks/11-346fd810.js'),
+			() => import('./chunks/12-620962ce.js'),
+			() => import('./chunks/13-a4c4a3ac.js'),
+			() => import('./chunks/14-3782f937.js'),
+			() => import('./chunks/15-4cf31746.js'),
+			() => import('./chunks/16-d96c5af5.js')
 		],
 		routes: [
 			{
@@ -51,7 +51,7 @@ const manifest = {
 				pattern: /^\/api\/v1\/auth\/me\/?$/,
 				params: [],
 				page: null,
-				endpoint: () => import('./chunks/_server.ts-e5d6b24e.js')
+				endpoint: () => import('./chunks/_server.ts-51c9d0f0.js')
 			},
 			{
 				id: "/api/v1/auth/oauth",
@@ -66,6 +66,34 @@ const manifest = {
 				params: [],
 				page: null,
 				endpoint: () => import('./chunks/_server.ts-7677d5db.js')
+			},
+			{
+				id: "/api/v1/messages/[roomId]",
+				pattern: /^\/api\/v1\/messages\/([^/]+?)\/?$/,
+				params: [{"name":"roomId","optional":false,"rest":false,"chained":false}],
+				page: null,
+				endpoint: () => import('./chunks/_server.ts-4a42dd91.js')
+			},
+			{
+				id: "/api/v1/rooms",
+				pattern: /^\/api\/v1\/rooms\/?$/,
+				params: [],
+				page: null,
+				endpoint: () => import('./chunks/_server.ts-43c822e6.js')
+			},
+			{
+				id: "/api/v1/rooms/[roomId]",
+				pattern: /^\/api\/v1\/rooms\/([^/]+?)\/?$/,
+				params: [{"name":"roomId","optional":false,"rest":false,"chained":false}],
+				page: null,
+				endpoint: () => import('./chunks/_server.ts-940feb53.js')
+			},
+			{
+				id: "/api/v1/users",
+				pattern: /^\/api\/v1\/users\/?$/,
+				params: [],
+				page: null,
+				endpoint: () => import('./chunks/_server.ts-7ed0839d.js')
 			},
 			{
 				id: "/auth/callback/[provider]",

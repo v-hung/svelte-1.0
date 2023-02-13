@@ -16,7 +16,7 @@ export const GET:RequestHandler = async ({ locals, request, cookies, params, url
   let roomId = params.roomId
   let page: number = +url.searchParams.get('page')|| 1
   
-  console.log(roomId)
+  // console.log(roomId)
   const messages = await prisma.messages.findMany({
     take: perPage,
     skip: (page - 1) * perPage,
