@@ -1,7 +1,7 @@
 import ioClient from "socket.io-client";
 import { PUBLIC_BASE_URL } from "$env/static/public"
-const ENDPOINT = "http://localhost:5173";
+const ENDPOINT = "https://svelte.viethung.fun";
 
-const socket = ioClient(PUBLIC_BASE_URL)
+const socket = ioClient(ENDPOINT)
 
 export const io = socket
