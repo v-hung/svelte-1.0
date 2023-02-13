@@ -22,8 +22,6 @@ export default function injectSocketIO(server) {
   io.on('connection', async (socket) => {
     let user = null
 
-    socket.emit('name', user?.id);
-
     socket.on('message', async (data) => {
       let users = await prisma.user.findMany({
         where: {
