@@ -1,6 +1,6 @@
 import type { Actions, PageServerLoad } from "./$types"
 import { fail, redirect, error } from '@sveltejs/kit';
-import { GITHUB_ID, GITHUB_SECRET, GOOGLE_ID, GOOGLE_SECRET } from "$env/static/private"
+import { GITHUB_ID, GITHUB_SECRET } from "$env/static/private"
 
 import prisma from "$lib/server/prismadb";
 import { signToken } from "$lib/utils/jwt";
