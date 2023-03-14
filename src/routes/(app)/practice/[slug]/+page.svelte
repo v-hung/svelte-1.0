@@ -4,13 +4,13 @@
   import logo from '$lib/images/svelte-logo.svg';
 	import { clickOutside } from '$lib/utils/clickOutSide';
   import { page } from "$app/stores";
-	import Diagram from '$lib/client/diagram.svelte';
-	import TruFalse from '$lib/client/tru_false.svelte';
-	import Short from '$lib/client/short.svelte';
-	import Single from '$lib/client/single.svelte';
-	import Summary from '$lib/client/summary.svelte';
-	import YesNo from '$lib/client/yes-no.svelte';
-	import Matching from '$lib/client/matching.svelte';
+	import Diagram from '$lib/components/client/questions/diagram.svelte';
+	import TruFalse from '$lib/components/client/questions/tru_false.svelte';
+	import Short from '$lib/components/client/questions/short.svelte';
+	import Single from '$lib/components/client/questions/single.svelte';
+	import Summary from '$lib/components/client/questions/summary.svelte';
+	import YesNo from '$lib/components/client/questions/yes-no.svelte';
+	import Matching from '$lib/components/client/questions/matching.svelte';
 	import { slide } from 'svelte/transition';
 
   export let data
