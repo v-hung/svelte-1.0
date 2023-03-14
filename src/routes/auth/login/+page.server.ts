@@ -8,18 +8,17 @@ import { removeSpace } from '$lib/utils/validator'
 import { signToken } from '$lib/utils/jwt'
 
 export const load: PageServerLoad = async ({ locals }) => {
-  if (!locals.session) return null
+  if (!locals.session.client) return null
 
   const user = await prisma.user.findUnique({
     where: {
-      id: locals.session?.user?.id
+      id: locals.session.client?.user?.id
     },
     select: {
       id: true,
       name: true,
       email: true,
-      image: true,
-      password: true
+      image: true
     }
   })
 
@@ -80,7 +79,7 @@ export const actions: Actions = {
     cookies.set('token', token, { path: '/', httpOnly: true, maxAge: 3600 })
     cookies.set('refresh_token', refresh_token, { path: '/', httpOnly: true, maxAge: remember ? 2592000 : 86400 })
 
-    throw redirect(302, url.searchParams.get('redirect_url') || "/dashboard")
+    throw redirect(302, url.searchParams.get('redirect_url') || "/")
 
     return { success: true }
   },

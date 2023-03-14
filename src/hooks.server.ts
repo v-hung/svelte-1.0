@@ -1,15 +1,112 @@
-// import SvelteKitAuth from "@auth/sveltekit"
-// import GitHub from '@auth/core/providers/github';
-// import Google from '@auth/core/providers/google';
-// import CredentialsProvider from "@auth/core/providers/credentials";
-// import { GITHUB_ID, GITHUB_SECRET, GOOGLE_ID, GOOGLE_SECRET } from "$env/static/private"
-
-// import { PrismaAdapter } from "@next-auth/prisma-adapter"
-// import type { Adapter } from '@auth/core/adapters';
 import { signToken, verifyToken } from "$lib/utils/jwt";
 import type { Handle } from "@sveltejs/kit";
 
 import prisma from "$lib/server/prismadb"
+// const guards = [
+//   {
+//     name : 'user',
+//     provider: 'users'
+//   },
+//   {
+//     name : 'admin',
+//     provider: 'admins'
+//   },
+// ]
+
+export const handle: Handle = async ({ event, resolve }) => {
+  // client check token
+  const tokenClient = event.request.headers.get('authorization')?.split(' ')[1] 
+    || event.cookies.get('token')
+    // || event.url.searchParams.get('token') // not use in hook
+    || "token"
+
+  const decodedClient = await verifyToken(tokenClient)
+
+  if (decodedClient) {
+    event.locals.session =  {
+      ...event.locals.session,
+      client: {
+        user: decodedClient,
+        expires: new Date(decodedClient.exp * 1000).toISOString()
+      }
+    }
+  }
+  else {
+    // const body = await event.request.json()
+    const refresh_token = event.cookies.get('refresh_token')
+      // || event.url.searchParams.get('refresh_token') // not use in hook
+      || "refresh_token"
+
+    const data_refresh_token = await refreshToken(refresh_token)
+
+    if (data_refresh_token) {
+      event.locals.session = {
+        ...event.locals.session,
+        client: {
+          user: data_refresh_token.user,
+          expires: new Date(new Date().getTime() + 3600000).toISOString()
+        }
+      }
+
+      event.cookies.set('token', data_refresh_token.token, { path: '/', httpOnly: true, maxAge: 3600 })
+    }
+    else {
+      event.locals.session = {
+        ...event.locals.session,
+        client: null
+      }
+    }
+  }
+
+  // admin check token
+  const tokenAdmin = event.cookies.get('token_admin') || "token_admin"
+
+  const decodedAdmin = await verifyToken(tokenAdmin)
+
+  if (decodedAdmin) {
+    event.locals.session =  {
+      ...event.locals.session,
+      admin: {
+        user: decodedAdmin,
+        expires: new Date(decodedAdmin.exp * 1000).toISOString()
+      }
+    }
+  }
+  else {
+    // const body = await event.request.json()
+    const refresh_token = event.cookies.get('refresh_token_admin')
+      // || event.url.searchParams.get('refresh_token') // not use in hook
+      || "refresh_token_admin"
+
+    const data_refresh_token = await refreshTokenAdmin(refresh_token)
+
+    if (data_refresh_token) {
+      event.locals.session = {
+        ...event.locals.session,
+        admin: {
+          user: data_refresh_token.user,
+          expires: new Date(new Date().getTime() + 3600000).toISOString()
+        }
+      }
+
+      event.cookies.set('token_admin', data_refresh_token.token, { path: '/', httpOnly: true, maxAge: 3600 })
+    }
+    else {
+      event.locals.session = {
+        ...event.locals.session,
+        admin: null
+      }
+    }
+  }
+
+  // if (event.url.pathname.split('/')[1] == "admin" && event.locals.session == null) {
+  //   return new Response('Redirect', {status: 303, headers: { Location: '/admin/login' }});
+  // }
+  
+  const response = await resolve(event)
+
+  return response;
+}
 
 const refreshToken = async (refresh_token) => {
   const refresh_token_db = await prisma.verificationToken.findFirst({
@@ -48,47 +145,39 @@ const refreshToken = async (refresh_token) => {
   }
 }
 
-export const handle: Handle = async ({ event, resolve }) => {
-  const token = event.request.headers.get('authorization')?.split(' ')[1] 
-    || event.cookies.get('token')
-    // || event.url.searchParams.get('token') // not use in hook
-    || "token"
-
-  const decoded = await verifyToken(token)
-
-  if (decoded) {
-    event.locals.session =  {
-      user: decoded,
-      expires: new Date(decoded.exp * 1000).toISOString()
-    }
-  }
-  else {
-    // const body = await event.request.json()
-    const refresh_token = event.cookies.get('refresh_token')
-      // || event.url.searchParams.get('refresh_token') // not use in hook
-      || "refresh_token"
-
-    const data_refresh_token = await refreshToken(refresh_token)
-
-    if (data_refresh_token) {
-      console.log('refresh_token')
-      event.locals.session = {
-        user: data_refresh_token.user,
-        expires: new Date(new Date().getTime() + 3600000).toISOString()
+const refreshTokenAdmin = async (refresh_token) => {
+  const refresh_token_db = await prisma.verificationToken.findFirst({
+    where: {
+      token: refresh_token,
+      expires: {
+        gte: new Date()
       }
+    }
+  })
 
-      event.cookies.set('token', data_refresh_token.token, { path: '/', httpOnly: true, maxAge: 3600 })
-    }
-    else {
-      event.locals.session = null
-    }
+  if (!refresh_token_db) {
+    return null
   }
 
-  if (event.url.pathname.split('/')[1] == "dashboard" && event.locals.session == null) {
-    return new Response('Redirect', {status: 303, headers: { Location: '/auth/login' }});
-  }
-  
-  const response = await resolve(event)
+  const decoded = await verifyToken(refresh_token)
 
-  return response;
+  const user = await prisma.admin.findUnique({
+    where: {
+      id: decoded?.id || "0"
+    },
+    select: {
+      id: true
+    }
+  })
+
+  if (!user) {
+    return null
+  }
+
+  const token = await signToken(user)
+
+  return {
+    user,
+    token
+  }
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-	import Container from '$lib/components/container.svelte';
+	import Container from '$lib/components/web/container.svelte';
 
   export let data
 </script>

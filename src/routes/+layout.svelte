@@ -1,11 +1,13 @@
 <script lang="ts">
+	import Alert from '$lib/components/alert.svelte';
 	import Loading from '$lib/components/loading.svelte';
-	import './styles.css';
+	import '../app.css';
 </script>
 
 <div id="app">
   <slot />
   <Loading />
+  <Alert />
 </div>
 
 <style lang="postcss">

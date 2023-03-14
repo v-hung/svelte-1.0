@@ -52,6 +52,15 @@ model User {
   // RoomsOnUsers  RoomsOnUsers[]
 }
 
+model Admin {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String?        @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+}
+
 model VerificationToken {
   identifier String
   token      String   @unique

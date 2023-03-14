@@ -1,3 +1,4 @@
+//@ts-ignore
 import { Server } from 'socket.io';
 
 export default function injectSocketIO(server) {

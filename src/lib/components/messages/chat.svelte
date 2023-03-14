@@ -4,7 +4,7 @@
 	import { io } from '$lib/socket-io';
 	import { onDestroy, onMount } from "svelte";
 	import { afterUpdate, dataset_dev } from "svelte/internal";
-	import Messages from "../messages.svelte";
+	import Messages from "./messages.svelte";
 	import ListMessage from "./list_message.svelte";
 
   export let room

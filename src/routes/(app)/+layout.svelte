@@ -5,7 +5,7 @@
 	import { clickOutside } from '$lib/utils/clickOutSide';
   import { page } from "$app/stores";
 	import { slide } from 'svelte/transition';
-	import Messages from '$lib/components/messages.svelte';
+	import Messages from '$lib/components/messages/messages.svelte';
 
   export let data
   
@@ -15,7 +15,7 @@
   let toggle_user = false
 </script>
 
-<div id="client">
+<div id="web">
   {#if show_header}
     <div class="fixed top-0 left-0 w-full h-16 px-8 shadow-sm shadow-gray-200 bg-white">
       <div class="flex items-center space-x-6">
@@ -127,7 +127,10 @@
     <slot/>
   </div>
 </div>
-<Messages />
+
+{#if $page.data.user}
+  <Messages />
+{/if}
 
 <style lang="postcss">
   #client {

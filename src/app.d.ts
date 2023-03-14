@@ -3,11 +3,22 @@
 // and what to do when importing types
 type GetSessionResult = Promise<Session | null>;
 
-type Session = {
-  user?: {
-    id?: string | null
+type SessionUserType = {
+  user: {
+    id: string
   }
   expires?: ISODateString
+}
+
+type Session = {
+  client: SessionUserType | null
+
+  admin: {
+    user: {
+      id: string
+    }
+    expires?: ISODateString
+  } | null;
 }
 
 type User = {
@@ -20,10 +31,10 @@ type User = {
 declare namespace App {
 	// interface Error {}
 	interface Locals {
-    session: Session | null;
+    session: Session;
   }
 	interface PageData {
-    user?: User | null;
+    // user?: User | null;
   }
 	// interface Platform {}
   

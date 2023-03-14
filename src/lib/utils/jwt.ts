@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken"
 import { AUTH_SECRET as token_key } from '$env/static/private';
 
 type User = {
-  id?: string | null
+  id: string
 }
 
 type UserDecode = User & {
