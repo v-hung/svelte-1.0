@@ -22,8 +22,6 @@
     if (submit_form_el)
       submit_form_el.click()
   }
-
-  $: console.log(data)
 </script>
 
 <a

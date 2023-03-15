@@ -52,6 +52,6 @@
     @apply fixed w-full h-0.5 top-0 left-0 z-50;
   }
   .line .line-process {
-    @apply absolute w-0 h-full bg-orange-600 ease-out;
+    @apply absolute w-0 h-full bg-orange-600 ease-in-out;
   }
 </style>
