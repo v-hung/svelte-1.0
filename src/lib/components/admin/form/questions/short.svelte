@@ -23,7 +23,7 @@
       answer <span class="text-red-600">*</span>
     </p>
     <div class="border rounded focus-within:ring-2 ring-orange-600 bg-white">
-      <input type="text" bind:value={data[index]['answer']} class="w-full px-4 py-2" placeholder="gold">
+      <input type="text" bind:value={data[index]['answer']['answer_name']} class="w-full px-4 py-2" placeholder="gold">
     </div>
   </div>
 </Question>

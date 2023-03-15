@@ -1,5 +1,9 @@
 <script lang="ts">
+	import { clickOutside } from "$lib/utils/clickOutSide";
+
   export let show = false
+  let clazz = '';
+	export { clazz as class };
 
   let first_show = show
   let el: HTMLElement | null = null
@@ -29,6 +33,11 @@
   $: collapse(show)
 </script>
 
-<div bind:this={el} style="{!first_show ? 'height: 0px;' : ''} overflow: hidden; transition: height .3s ease;">
+<div 
+  bind:this={el} 
+  style="{!first_show ? 'height: 0px;' : ''} overflow: hidden; transition: height .3s ease;"
+  class="{clazz}"
+  use:clickOutside on:clickOutside={() => show = false}
+>
   <slot />
 </div>

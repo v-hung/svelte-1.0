@@ -110,7 +110,7 @@
     transition:scale="{{ duration: 500 }}"
     bind:this={modal_choose_answer_el}
     class="fixed rounded shadow bg-white z-10"
-    use:clickOutside on:click_outside={closeModalChooseAnswer}
+    use:clickOutside on:clickOutside={closeModalChooseAnswer}
   >
     <div class="min-w-[200px] max-h-52 flex flex-col space-y-2 p-4 overflow-y-auto">
       {#each suggestions as suggestion}

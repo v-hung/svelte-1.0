@@ -26,41 +26,41 @@
     outline: none;
 	}                                                                                  
 
-  table {
+  table, .table {
     @apply w-full;
   }
 
-  table td,
-  table th {
+  td, th, .table-row{
     @apply py-5 px-4 font-normal;
   }
 
-  table > thead > tr {
+  thead > tr, thead > .table-row {
     @apply uppercase text-sm text-left border-b border-gray-300 text-[#333];
   }
 
-  table > tbody > tr > td:first-child,
-  table > tbody > tr > td:last-child {
+  tbody > tr > td:first-child, tbody > tr > td:last-child,
+  tbody > .table-row > td:first-child, tbody > .table-row > td:last-child {
     white-space: nowrap;
     width: 1px;
   }
 
-  table tr > td:first-child {
+  tr > td:first-child, .table-row > td:first-child {
     @apply pl-0
   }
-  table tr > td:last-child {
-    @apply pl-12;
+  tr > td:last-child, .table-row > td:last-child,
+  tr > th:last-child, .table-row > th:last-child  {
+    @apply pl-12 text-end;
   }
 
-  table > tbody > tr {
+  tbody > tr, tbody > .table-row {
     @apply bg-white border-b border-gray-200;
   }
 
-  table > tbody > tr > td > *{
+  tbody > tr > td > *, tbody > .table-row > td > *{
     @apply line-clamp-1;
   }
 
-  input[type=checkbox] {
+  input[type=checkbox], .checkbox {
     vertical-align: sub;
     margin: 0px;
     height: 18px;
@@ -71,10 +71,10 @@
     background-color: rgb(255, 255, 255);
     cursor: pointer;
   }
-  input[type=checkbox]:checked {
+  input[type=checkbox]:checked, .checkbox:checked {
     @apply bg-orange-600 border-orange-600;
   }
-  input[type=checkbox]:checked::after{
+  input[type=checkbox]:checked::after, .checkbox:checked::after {
     content: "";
     display: block;
     position: relative;

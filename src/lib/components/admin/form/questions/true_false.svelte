@@ -6,7 +6,7 @@
   export let data
 
   const changeAnswer = (index,value) => {
-    data[index]['answer'] = value
+    data[index]['answer']['answer_name'] = value
   }
 </script>
 
@@ -20,7 +20,7 @@
     <div class="flex -mx-2 flex-wrap">
       <div class="w-1/3 px-2 mb-4">
         <button 
-          class="item-answer {data[index]['answer'] == 'true' ? 'active' : ''}" 
+          class="item-answer {data[index]['answer']['answer_name'] == 'true' ? 'active' : ''}" 
           on:click|preventDefault={() => changeAnswer(index, 'true')}
         >
           <span class="grid w-7 h-7 place-items-center rounded-full bg-gray-200">A</span>
@@ -30,7 +30,7 @@
 
       <div class="w-1/3 px-2 mb-4">
         <button 
-          class="item-answer {data[index]['answer'] == 'false' ? 'active' : ''}" 
+          class="item-answer {data[index]['answer']['answer_name'] == 'false' ? 'active' : ''}" 
           on:click|preventDefault={() => changeAnswer(index, 'false')}
         >
           <span class="grid w-7 h-7 place-items-center rounded-full bg-gray-200">B</span>
@@ -40,7 +40,7 @@
 
       <div class="w-1/3 px-2 mb-4">
         <button 
-          class="item-answer {data[index]['answer'] == 'not_give' ? 'active' : ''}" 
+          class="item-answer {data[index]['answer']['answer_name'] == 'not_give' ? 'active' : ''}" 
           on:click|preventDefault={() => changeAnswer(index, 'not_give')}
         >
           <span class="grid w-7 h-7 place-items-center rounded-full bg-gray-200">C</span>

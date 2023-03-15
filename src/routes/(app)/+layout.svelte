@@ -68,7 +68,7 @@
         <!-- user -->
         <div class="!ml-auto">
           {#if data.user}
-            <div class="relative" use:clickOutside on:click_outside={() => toggle_user = false}>
+            <div class="relative" use:clickOutside on:clickOutside={() => toggle_user = false}>
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <div class="flex space-x-1 items-center" on:click|preventDefault={() => toggle_user = !toggle_user}>
                 <div class="w-10 h-10 border rounded-full overflow-hidden cursor-pointer">
@@ -133,7 +133,7 @@
 {/if}
 
 <style lang="postcss">
-  #client {
+  #web {
     @apply flex flex-col min-h-screen bg-white text-[#333];
   }
 

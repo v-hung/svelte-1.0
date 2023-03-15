@@ -47,7 +47,7 @@
         <Collapse show={show_item == index}>
           <div class="bg-orange-100 px-4 py-6">
             <div class="mb-4">
-              <RichText bind:data={item.content} label="content" height="{300}" />
+              <RichText bind:data={item.content} label="content" height="{500}" />
             </div>
             <GroupQuestion bind:data={item.group_questions} />
           </div>

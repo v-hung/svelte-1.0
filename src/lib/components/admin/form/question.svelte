@@ -7,7 +7,9 @@
   const addToData = () => {
     data = [...data, {
       title: '',
-      answer: null,
+      answer: {
+        answer_name: null
+      },
       option_a: '',
       option_b: '',
       option_c: '',
