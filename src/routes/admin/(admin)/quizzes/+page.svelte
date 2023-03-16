@@ -3,6 +3,7 @@
 	import { invalidateAll } from "$app/navigation";
   import { page } from "$app/stores";
 	import Collapse from "$lib/components/collapse.svelte";
+	import { clickOutside } from "$lib/utils/clickOutSide";
 	import { fade } from "svelte/transition";
 	import { alertStore } from "../../../../stores/alert";
   export let data
@@ -133,7 +134,9 @@
 
 {#if form_delete}
   <div transition:fade class="fixed w-full h-full top-0 left-0 flex items-center justify-center bg-black/10 z-50">
-    <div class="w-full max-w-md bg-white p-8 rounded shadow">
+    <div class="w-full max-w-md bg-white p-8 rounded shadow"
+      use:clickOutside on:clickOutside={() => form_delete = null}
+    >
       <form action="{$page.url.pathname}/${form_delete}?/delete" method="post"
         use:enhance={({ form, data, action, cancel }) => {
           form_loading = true
