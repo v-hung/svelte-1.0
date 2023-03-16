@@ -38,24 +38,24 @@ model Account {
 // }
 
 model User {
-  id            String         @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String?        @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
   password      String?
   accounts      Account[]
   // sessions      Session[]
 
-  messages      Messages[]
-  rooms Rooms[]
+  messages Messages[]
+  rooms    Rooms[]
   // RoomsOnUsers  RoomsOnUsers[]
 }
 
 model Admin {
-  id            String         @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String?        @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
   password      String?
@@ -94,11 +94,13 @@ model Passages {
 }
 
 model GroupQuestions {
-  id      String  @id @default(cuid())
+  id      String @id @default(cuid())
   type    String
   title   String
-  image   String?
   options Json?
+
+  image_id String?
+  image    Images? @relation(fields: [image_id], references: [id])
 
   passage_id String
   passage    Passages @relation(fields: [passage_id], references: [id])
@@ -131,11 +133,11 @@ model Answers {
 
 // messages
 model Rooms {
-  id           String         @id @default(cuid())
+  id String @id @default(cuid())
 
-  messages     Messages[]
+  messages Messages[]
   // RoomsOnUsers RoomsOnUsers[]
-  users User[]
+  users    User[]
 }
 
 // model RoomsOnUsers {
@@ -159,6 +161,19 @@ model Messages {
 
   roomId String
   room   Rooms  @relation(fields: [roomId], references: [id])
+}
+
+model Images {
+  id      String @id @default(cuid())
+  name    String
+  type    String
+  caption String
+  url     String
+  width   Int
+  height  Int
+  size    Float  @db.Double
+
+  group_quesstion GroupQuestions[]
 }
 
 // https://tuhocielts.dolenglish.vn/luyen-thi-ielts/ielts-online-test-luyen-tap-cambridge-ielts-16-test-4-reading

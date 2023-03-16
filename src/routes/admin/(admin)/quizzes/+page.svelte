@@ -24,8 +24,6 @@
 
   let displayed_fields_show = false
   let displayed_fields = Object.keys(data.entries[0] || {})
-
-  $:console.log(displayed_fields)
 </script>
 
 <section class="flex justify-between items-end">

@@ -2,10 +2,15 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
 	import { clickOutside } from "$lib/utils/clickOutSide";
+	import type { Images } from "@prisma/client";
+	import { prevent_default } from "svelte/internal";
 
   export let label = 'image'
-  export let data = ''
+  export let multipleImage = false
+  export let data: any | null = null
   export let name = ""
+
+  console.log(data)
 
   let showModal = false
   let view : "assets" | "upload" | "storage" | "selected" = "storage"
@@ -69,6 +74,7 @@
     })
     .then(async res => {
       let body = await res.json()
+      // storageFiles = [...storageFiles, ...body]
     })
     .catch(e => console.log(e))
 
@@ -80,7 +86,7 @@
   // view storage file
 
   let loadFilesLoading = false
-  let storage_files = []
+  let storageFiles: Images[] = []
 
   const loadFiles = async () => {
     if (!browser) return
@@ -88,31 +94,43 @@
 
     await fetch('/storage')
     .then(async res => {
-      storage_files = await res.json()
+      storageFiles = await res.json()
     })
     .catch(e => console.log(e))
 
     loadFilesLoading = false
   }
 
+  // loadFiles()
+
   $: if (view == "storage") {
     loadFiles()
   }
 
-  let fileChoose = null
+  let fileChoose = []
   let fileUrl = ""
 
   const chooseFile = (e, item) => {
-    e.target.checked = true
-    fileChoose = item
+    let checked = e.target.checked
+    if (multipleImage) {
+      fileChoose = checked 
+        ? [...fileChoose, item]
+        : fileChoose.filter(v => v != item)
+    }
+    else {
+      fileChoose[0] = checked ? item : []
+    }
   }
 
+  const findChecked = (item) => fileChoose.findIndex(v => v == item) >= 0
+
   const finish = (type: "url" | "upload") => {
-    if (type == "upload") {
-      data = '/storage/' + fileChoose
+    if (multipleImage) {
+      // data = storageFiles.find(v => fileChoose[0])
     }
-    else if (type == "url") {
-      data = fileUrl
+    else {
+      data = storageFiles.find(v => v.url == fileChoose[0])
+      // console.log(data)
     }
 
     toggleModal(false)
@@ -129,14 +147,18 @@
     </span>
   </p>
   <div class="h-36 border rounded focus-within:ring-2 ring-orange-600 bg-white">
-    <input type="hidden" name={name} bind:value={data} class="sr-only">
+    <input type="hidden" name={name} value={multipleImage ? data.map(v => v.id) : data ? data.id : null} class="sr-only">
     <div 
       class="w-full h-full flex flex-col justify-center items-center cursor-pointer"
       on:click|preventDefault={toggleModal}
     >
-      {#if data}
+      {#if typeof data == 'object'}
         <div class="w-full h-full p-2 bg-make-transparent">
-          <img src="{data}" alt="" class="w-full h-full object-contain">
+          <img src="{data?.url}" alt="" class="w-full h-full object-contain">
+        </div>
+      {:else if Array.isArray(data)}
+        <div class="w-full h-full p-2 bg-make-transparent">
+          <!-- <img src="{data?.url}" alt="" class="w-full h-full object-contain"> -->
         </div>
       {:else}
         <span class="icon w-10 h-10 text-orange-600">
@@ -174,14 +196,14 @@
               on:click|preventDefault={() => {}}
             >
               Browse
-              <span class="px-1 py-0.5 bg-gray-100 text-$primary rounded">{storage_files.length}</span>
+              <span class="px-1 py-0.5 bg-gray-100 text-$primary rounded">{storageFiles.length}</span>
             </button>
 
             <button class="p-4 uppercase text-xs font-semibold border-b"
             on:click|preventDefault={() => view = "selected"}
             >
               Selected files
-              <span class="px-1 py-0.5 bg-gray-100 text-$primary rounded">{storage_files.length}</span>
+              <span class="px-1 py-0.5 bg-gray-100 text-$primary rounded">{fileChoose.length}</span>
             </button>
 
             <button class="ml-auto btn btn-orange"
@@ -193,17 +215,21 @@
             <div class="relative">
               <div class="mt-8">
                 <div class="grid gap-4" style="grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));">
-                  {#each storage_files as item, index}
+                  {#each storageFiles as item, index}
                     <div class="rounded border overflow-hidden">
                       <div class="relative w-full h-24 bg-make-transparent">
-                        <img src="/storage/{item}" alt="" class="w-full h-full object-contain">
+                        <img src="{item.url}" alt="" class="w-full h-full object-contain">
                         <div class="absolute top-2 left-2">
-                          <input type="checkbox" name="fileChoose" on:click={(e) => chooseFile(e,item)} checked={fileChoose == item}>
+                          <input type="checkbox" name="fileChoose" 
+                            on:click={(e) => chooseFile(e,item.url)} 
+                            bind:group={fileChoose}
+                            value={item.url}
+                          >
                         </div>
                       </div>
-                      <div class="p-4 py-2 flex justify-between items-start border-t">
+                      <div class="p-4 py-2 flex justify-between space-x-2 items-start border-t">
                         <div class="text-xs">
-                          <p class="font-semibold text-$primary">{item}</p>
+                          <p class="font-semibold text-$primary">{item.name}</p>
                           <!-- <p class="uppercase">{item.type}</p> -->
                         </div>
                         <div class="text-[10px] p-1 py-0.5 font-semibold rounded bg-gray-100">IMAGE</div>
@@ -305,14 +331,14 @@
               on:click|preventDefault={() => view = "storage"}
             >
               Browse
-              <span class="px-1 py-0.5 bg-gray-100 text-$primary rounded">{storage_files.length}</span>
+              <span class="px-1 py-0.5 bg-gray-100 text-$primary rounded">{storageFiles.length}</span>
             </button>
 
             <button class="p-4 uppercase text-xs font-semibold text-orange-600 border-b border-orange-600"
             on:click|preventDefault={() => view = "selected"}
             >
               Selected files
-              <span class="px-1 py-0.5 bg-gray-100 text-$primary rounded">{1}</span>
+              <span class="px-1 py-0.5 bg-gray-100 text-$primary rounded">{fileChoose.length}</span>
             </button>
 
             <button class="ml-auto btn btn-orange"
@@ -328,14 +354,14 @@
             </div>
             <div class="mt-8">
               <div class="grid gap-4" style="grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));">
-                {#each imgFiles as item, index}
+                {#each fileChoose as item, index}
                   <div class="rounded border overflow-hidden group">
                     <div class="relative w-full h-24 bg-make-transparent">
-                      <img src="{item.preview}" alt="" class="w-full h-full object-contain">
+                      <img src="{item}" alt="" class="w-full h-full object-contain">
                       <div class="hidden absolute top-2 right-2 group-hover:block">
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <div class="btn-icon pr-2 cursor-pointer"
-                          on:click|preventDefault={() => removeFileChange(index)}
+                          on:click|preventDefault={() => fileChoose = fileChoose.filter(v => v != item)}
                         >
                           <span class="icon w-4 h-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z"></path></svg>
@@ -343,10 +369,10 @@
                         </div>
                       </div>
                     </div>
-                    <div class="p-4 py-2 flex justify-between items-start border-t">
+                    <div class="p-4 py-2 flex justify-between space-x-2 items-start border-t">
                       <div class="text-xs">
-                        <p class="font-semibold text-$primary">{item.name}</p>
-                        <p class="uppercase">{item.type}</p>
+                        <p class="font-semibold text-$primary">{storageFiles.find(v => v.url == item)?.name}</p>
+                        <p class="uppercase">{storageFiles.find(v => v.url == item)?.type}</p>
                       </div>
                       <div class="text-[10px] p-1 py-0.5 font-semibold rounded bg-gray-100">IMAGE</div>
                     </div>

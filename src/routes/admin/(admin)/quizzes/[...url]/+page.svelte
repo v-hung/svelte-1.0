@@ -23,7 +23,7 @@
       submit_form_el.click()
   }
 
-  $: console.log(data)
+  // $: console.log(data)
 </script>
 
 <a
@@ -53,6 +53,7 @@
           use:enhance={({ form, data, action, cancel }) => {
             form_loading = true
             data.append('passages', JSON.stringify(passages))
+            console.log(passages)
 
             return async ({ result, update }) => {
               await applyAction(result)
