@@ -134,66 +134,67 @@ export const actions = {
           }
         })
 
-        const transaction = await prisma.$transaction(
-          let passage_data_update = passages.map((v,i) => {
-            return {
-              where: {
-                id: v.id
-              },
-              data: {
-                title: 'passage ' + i,
-                content: v.content, 
-                group_questions: {
-                  update: v.group_questions.map((v2,i2) => {
-                    return {
-                      where: {
-                        id: v2.id,
-                      },
-                      data: {
-                        title: v2.title || GROUP_QUESTION.find(a => v2.type == a.type).label || "Group question",
-                        type: v2.type,
-                        image_id: v2.image_id,
-                        options: v2.options,
-                        questions: {
-                          update: v2.questions.map((v3,i3) => {
-                            return {
-                              where: {
-                                id: v3.id,
-                              },
-                              data: {
-                                question_name: v3.question_name || '',
-                                option_a: v3.option_a || '',
-                                option_b: v3.option_b || '',
-                                option_c: v3.option_c || '',
-                                option_d: v3.option_d || '',
-                                answer: {
-                                  update: {
-                                    where: {
-                                      id: v3.answer.id,
-                                    },
-                                    data: {
-                                      answer_name: v3.answer.answer_name
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          })
-                        }
-                      }
-                    }
-                  })
-                }
-              }
-            }
-          })
-          tagIds.map((tagId) =>
-            client.tag.update({
-              where: { id: parseInt(tagId) },
-              data: { files: { create: { fileId } } },
-            })
-          )
-        );
+        // const transaction = await prisma.$transaction(
+        //   let passage_data_update = passages.map((v,i) => {
+        //     return {
+        //       where: {
+        //         id: v.id
+        //       },
+        //       data: {
+        //         title: 'passage ' + i,
+        //         content: v.content, 
+        //         group_questions: {
+        //           update: v.group_questions.map((v2,i2) => {
+        //             return {
+        //               where: {
+        //                 id: v2.id,
+        //               },
+        //               data: {
+        //                 title: v2.title || GROUP_QUESTION.find(a => v2.type == a.type).label || "Group question",
+        //                 type: v2.type,
+        //                 image_id: v2.image_id,
+        //                 options: v2.options,
+        //                 questions: {
+        //                   update: v2.questions.map((v3,i3) => {
+        //                     return {
+        //                       where: {
+        //                         id: v3.id,
+        //                       },
+        //                       data: {
+        //                         question_name: v3.question_name || '',
+        //                         option_a: v3.option_a || '',
+        //                         option_b: v3.option_b || '',
+        //                         option_c: v3.option_c || '',
+        //                         option_d: v3.option_d || '',
+        //                         answer: {
+        //                           update: {
+        //                             where: {
+        //                               id: v3.answer.id,
+        //                             },
+        //                             data: {
+        //                               answer_name: v3.answer.answer_name
+        //                             }
+        //                           }
+        //                         }
+        //                       }
+        //                     }
+        //                   })
+        //                 }
+        //               }
+        //             }
+        //           })
+        //         }
+        //       }
+        //     }
+        //   })
+          
+        //   tagIds.map((tagId) =>
+        //     client.tag.update({
+        //       where: { id: parseInt(tagId) },
+        //       data: { files: { create: { fileId } } },
+        //     })
+        //   )
+        // );
       }
 
       return { message: 'Mission Completed' }
