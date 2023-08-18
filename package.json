@@ -6,6 +6,8 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"start": "ORIGIN=https://english.viethung.fun BODY_SIZE_LIMIT=104857600 node server.js",
+		"seed": "npx ts-node-esm ./prisma/seed.ts",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check .",
 		"format": "prettier --plugin-search-dir . --write ."
@@ -19,19 +21,21 @@
 		"@types/cookie": "^0.5.1",
 		"autoprefixer": "^10.4.13",
 		"postcss": "^8.4.21",
-		"prettier": "^2.8.4",
-		"prettier-plugin-svelte": "^2.9.0",
-		"prisma": "^4.10.1",
-		"svelte": "^3.55.1",
+		"prettier": "^3.0.2",
+		"prettier-plugin-svelte": "^3.0.3",
+		"prisma": "^5.1.1",
+		"svelte": "^4.2.0",
 		"svelte-check": "^3.0.3",
 		"tailwindcss": "^3.2.6",
 		"tslib": "^2.5.0",
-		"typescript": "^4.9.5",
+		"typescript": "^5.1.6",
 		"vite": "^4.1.1"
 	},
 	"type": "module",
 	"dependencies": {
-		"@prisma/client": "^4.10.1",
+		"@photo-sphere-viewer/autorotate-plugin": "^5.1.4",
+		"@photo-sphere-viewer/core": "^5.1.4",
+		"@prisma/client": "^5.1.1",
 		"@sveltejs/adapter-node": "^1.2.0",
 		"@tinymce/tinymce-svelte": "^1.0.0",
 		"animejs": "^3.2.1",
@@ -45,6 +49,7 @@
 		"socket.io-client": "^4.6.0",
 		"sortablejs": "^1.15.0",
 		"tinymce": "^6.3.1",
+		"ts-node": "^10.9.1",
 		"validator": "^13.9.0"
 	}
 }

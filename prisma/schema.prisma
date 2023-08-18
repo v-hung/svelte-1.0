@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -85,7 +85,7 @@ model Quizzes {
 model Passages {
   id      String @id @default(cuid())
   title   String
-  content String @db.Text
+  content String
 
   quiz_id String
   quiz    Quizzes @relation(fields: [quiz_id], references: [id])
@@ -97,7 +97,7 @@ model GroupQuestions {
   id      String @id @default(cuid())
   type    String
   title   String
-  options Json?
+  options String
 
   image_id String?
   image    Images? @relation(fields: [image_id], references: [id])
@@ -171,7 +171,7 @@ model Images {
   url     String
   width   Int
   height  Int
-  size    Float  @db.Double
+  size    Float
 
   group_quesstion GroupQuestions[]
 }

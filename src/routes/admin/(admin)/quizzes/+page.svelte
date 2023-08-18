@@ -60,14 +60,16 @@
       </span>
     </button>
     <Collapse show={displayed_fields_show} class="absolute bg-white shadow right-0 w-max">
-      <div class="p-1 flex flex-col border rounded w-40">
-        {#each Object.keys(data.entries[0]) as key, i}
-          <label for="displayedFields{i}" class="flex items-center space-x-4 px-4 py-2 hover:bg-orange-200 rounded">
-            <input type="checkbox" id="displayedFields{i}" value="{key}" bind:group={displayed_fields}>
-            <span>{key}</span>
-          </label>
-        {/each}
-      </div>
+      {#if data.entries.length > 0}
+        <div class="p-1 flex flex-col border rounded w-40">
+          {#each Object.keys(data.entries[0]) as key, i}
+            <label for="displayedFields{i}" class="flex items-center space-x-4 px-4 py-2 hover:bg-orange-200 rounded">
+              <input type="checkbox" id="displayedFields{i}" value="{key}" bind:group={displayed_fields}>
+              <span>{key}</span>
+            </label>
+          {/each}
+        </div>
+      {/if}
     </Collapse>
   </div>
 </section>
@@ -149,6 +151,7 @@
             if (result.type == "success") {
               alertStore.addAlert({
                 type: "success",
+                //@ts-ignore
                 title: result.data?.message
               })
               form_delete = null
@@ -157,6 +160,7 @@
             else if (result.type == "failure") {
               alertStore.addAlert({
                 type: "warning",
+                //@ts-ignore
                 title: result.data?.error
               })
             }
